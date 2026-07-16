@@ -3,13 +3,27 @@ info:
   # Do not change the title, if the title changes, the import paths will be broken
   title: Api
   version: 0.1.0
-  description: API specification
+  description: Urban Up - Smart City & Tourism Platform API
 servers:
   - url: /api
     description: Base API path
 tags:
   - name: health
     description: Health operations
+  - name: profile
+    description: User smart profile
+  - name: tourist
+    description: Tourist spots and events
+  - name: traffic
+    description: Traffic reports and AI routing
+  - name: waste
+    description: Eco-waste reporting
+  - name: accessibility
+    description: Safe paths for disabled users
+  - name: points
+    description: Jawwal Points wallet
+  - name: dashboard
+    description: Dashboard summaries
 paths:
   /healthz:
     get:
@@ -24,6 +38,310 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+
+  /profile:
+    get:
+      operationId: getProfile
+      tags: [profile]
+      summary: Get user smart profile
+      responses:
+        "200":
+          description: User profile with points and achievements
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserProfile"
+    put:
+      operationId: updateProfile
+      tags: [profile]
+      summary: Update user profile
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProfileInput"
+      responses:
+        "200":
+          description: Updated profile
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserProfile"
+
+  /tourist/spots:
+    get:
+      operationId: getTouristSpots
+      tags: [tourist]
+      summary: List tourist spots and cultural venues
+      responses:
+        "200":
+          description: List of tourist spots
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/TouristSpot"
+
+  /tourist/events:
+    get:
+      operationId: getTouristEvents
+      tags: [tourist]
+      summary: List upcoming cultural events
+      responses:
+        "200":
+          description: List of events
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/TouristEvent"
+
+  /traffic/reports:
+    get:
+      operationId: getTrafficReports
+      tags: [traffic]
+      summary: Get current traffic reports and congestion zones
+      responses:
+        "200":
+          description: Traffic reports
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/TrafficReport"
+    post:
+      operationId: createTrafficReport
+      tags: [traffic]
+      summary: Submit a traffic incident report
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TrafficReportInput"
+      responses:
+        "201":
+          description: Report created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TrafficReport"
+
+  /traffic/route:
+    post:
+      operationId: getSmartRoute
+      tags: [traffic]
+      summary: Get AI smart routing with alternative routes and point rewards
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RouteRequest"
+      responses:
+        "200":
+          description: Smart route response with alternatives and point rewards
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SmartRouteResponse"
+
+  /traffic/accept-alternative:
+    post:
+      operationId: acceptAlternativeRoute
+      tags: [traffic]
+      summary: Accept alternative route and earn Jawwal Points
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AcceptRouteInput"
+      responses:
+        "200":
+          description: Points awarded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PointsTransaction"
+
+  /waste/reports:
+    get:
+      operationId: getWasteReports
+      tags: [waste]
+      summary: Get waste/bin reports on the map
+      responses:
+        "200":
+          description: List of waste reports
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/WasteReport"
+    post:
+      operationId: createWasteReport
+      tags: [waste]
+      summary: Report overflowing bin or waste issue
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WasteReportInput"
+      responses:
+        "201":
+          description: Report created and eco-points awarded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/WasteReport"
+
+  /waste/cleanup:
+    post:
+      operationId: reportCleanup
+      tags: [waste]
+      summary: Report a cleanup action and earn Eco-Points
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CleanupInput"
+      responses:
+        "200":
+          description: Eco-points awarded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PointsTransaction"
+
+  /accessibility/paths:
+    get:
+      operationId: getAccessibilityPaths
+      tags: [accessibility]
+      summary: Get safe paths for wheelchair and visually impaired users
+      responses:
+        "200":
+          description: List of safe paths
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/AccessibilityPath"
+
+  /accessibility/obstacles:
+    get:
+      operationId: getObstacles
+      tags: [accessibility]
+      summary: Get reported obstacles on safe paths
+      responses:
+        "200":
+          description: List of obstacles
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Obstacle"
+    post:
+      operationId: reportObstacle
+      tags: [accessibility]
+      summary: Report a dynamic obstacle on a safe path
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ObstacleInput"
+      responses:
+        "201":
+          description: Obstacle reported
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Obstacle"
+
+  /points/wallet:
+    get:
+      operationId: getWallet
+      tags: [points]
+      summary: Get Jawwal Points balance and recent transactions
+      responses:
+        "200":
+          description: Wallet with balance and transactions
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Wallet"
+
+  /points/redeem:
+    post:
+      operationId: redeemPoints
+      tags: [points]
+      summary: Redeem Jawwal Points for rewards
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RedeemInput"
+      responses:
+        "200":
+          description: Redemption successful
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PointsTransaction"
+
+  /dashboard/summary:
+    get:
+      operationId: getDashboardSummary
+      tags: [dashboard]
+      summary: Get aggregated dashboard stats for all modules
+      responses:
+        "200":
+          description: Dashboard summary
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DashboardSummary"
+
+  /dashboard/activity-feed:
+    get:
+      operationId: getActivityFeed
+      tags: [dashboard]
+      summary: Get recent activity across all modules
+      responses:
+        "200":
+          description: Recent activity feed
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ActivityItem"
+
+  /dashboard/leaderboard:
+    get:
+      operationId: getLeaderboard
+      tags: [dashboard]
+      summary: Get top users by Jawwal Points
+      responses:
+        "200":
+          description: Leaderboard
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/LeaderboardEntry"
+
 components:
   schemas:
     HealthStatus:
@@ -34,3 +352,429 @@ components:
       required:
         - status
 
+    UserProfile:
+      type: object
+      required: [id, username, jawwalPoints, ecoPoints, driverLevel, totalReports, achievements]
+      properties:
+        id:
+          type: integer
+        username:
+          type: string
+        jawwalPoints:
+          type: integer
+        ecoPoints:
+          type: integer
+        driverLevel:
+          type: string
+        totalReports:
+          type: integer
+        achievements:
+          type: array
+          items:
+            type: string
+        avatarInitials:
+          type: ["string", "null"]
+
+    ProfileInput:
+      type: object
+      properties:
+        username:
+          type: string
+        avatarInitials:
+          type: string
+
+    TouristSpot:
+      type: object
+      required: [id, name, category, lat, lng, description, crowdLevel]
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        category:
+          type: string
+          enum: [heritage, culture, market, event, park]
+        lat:
+          type: number
+        lng:
+          type: number
+        description:
+          type: string
+        crowdLevel:
+          type: string
+          enum: [low, medium, high]
+        hasTrafficWarning:
+          type: boolean
+        imageUrl:
+          type: ["string", "null"]
+
+    TouristEvent:
+      type: object
+      required: [id, name, venueId, startDate, endDate, category, description]
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        venueId:
+          type: integer
+        venueName:
+          type: string
+        startDate:
+          type: string
+        endDate:
+          type: string
+        category:
+          type: string
+        description:
+          type: string
+        pointsReward:
+          type: integer
+
+    TrafficReport:
+      type: object
+      required: [id, lat, lng, severity, description, status, createdAt]
+      properties:
+        id:
+          type: integer
+        lat:
+          type: number
+        lng:
+          type: number
+        severity:
+          type: string
+          enum: [low, medium, high, critical]
+        description:
+          type: string
+        status:
+          type: string
+          enum: [active, resolved]
+        createdAt:
+          type: string
+        reporterUsername:
+          type: ["string", "null"]
+
+    TrafficReportInput:
+      type: object
+      required: [lat, lng, severity, description]
+      properties:
+        lat:
+          type: number
+        lng:
+          type: number
+        severity:
+          type: string
+          enum: [low, medium, high, critical]
+        description:
+          type: string
+
+    RouteRequest:
+      type: object
+      required: [originLat, originLng, destLat, destLng]
+      properties:
+        originLat:
+          type: number
+        originLng:
+          type: number
+        destLat:
+          type: number
+        destLng:
+          type: number
+        destinationName:
+          type: string
+
+    SmartRouteResponse:
+      type: object
+      required: [mainRoute, isCongested]
+      properties:
+        isCongested:
+          type: boolean
+        mainRoute:
+          $ref: "#/components/schemas/RouteOption"
+        alternativeRoute:
+          $ref: "#/components/schemas/RouteOption"
+        pointsIfAlternative:
+          type: integer
+        congestionMessage:
+          type: ["string", "null"]
+
+    RouteOption:
+      type: object
+      required: [name, estimatedMinutes, distanceKm, waypoints]
+      properties:
+        name:
+          type: string
+        estimatedMinutes:
+          type: integer
+        distanceKm:
+          type: number
+        waypoints:
+          type: array
+          items:
+            type: array
+            items:
+              type: number
+        trafficLevel:
+          type: string
+          enum: [free, slow, congested]
+        parkingZone:
+          type: ["string", "null"]
+
+    AcceptRouteInput:
+      type: object
+      required: [routeName, pointsAmount]
+      properties:
+        routeName:
+          type: string
+        pointsAmount:
+          type: integer
+        usedParkingZone:
+          type: boolean
+
+    WasteReport:
+      type: object
+      required: [id, lat, lng, type, status, createdAt]
+      properties:
+        id:
+          type: integer
+        lat:
+          type: number
+        lng:
+          type: number
+        type:
+          type: string
+          enum: [overflowing_bin, mixed_waste, litter, other]
+        status:
+          type: string
+          enum: [pending, in_progress, resolved]
+        description:
+          type: string
+        createdAt:
+          type: string
+        ecoPointsAwarded:
+          type: integer
+        reporterUsername:
+          type: ["string", "null"]
+
+    WasteReportInput:
+      type: object
+      required: [lat, lng, type]
+      properties:
+        lat:
+          type: number
+        lng:
+          type: number
+        type:
+          type: string
+          enum: [overflowing_bin, mixed_waste, litter, other]
+        description:
+          type: string
+
+    CleanupInput:
+      type: object
+      required: [lat, lng, description]
+      properties:
+        lat:
+          type: number
+        lng:
+          type: number
+        description:
+          type: string
+        wasteReportId:
+          type: ["integer", "null"]
+
+    AccessibilityPath:
+      type: object
+      required: [id, name, pathType, waypoints, isActive]
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        pathType:
+          type: string
+          enum: [wheelchair, blind_friendly, both]
+        waypoints:
+          type: array
+          items:
+            type: array
+            items:
+              type: number
+        isActive:
+          type: boolean
+        surfaceType:
+          type: string
+        hasAudioCues:
+          type: boolean
+        hasHapticMarkers:
+          type: boolean
+
+    Obstacle:
+      type: object
+      required: [id, lat, lng, obstacleType, severity, isActive, createdAt]
+      properties:
+        id:
+          type: integer
+        lat:
+          type: number
+        lng:
+          type: number
+        obstacleType:
+          type: string
+          enum: [pothole, barrier, parked_vehicle, construction, other]
+        severity:
+          type: string
+          enum: [low, medium, high]
+        isActive:
+          type: boolean
+        description:
+          type: string
+        affectsPathId:
+          type: ["integer", "null"]
+        createdAt:
+          type: string
+        reporterUsername:
+          type: ["string", "null"]
+
+    ObstacleInput:
+      type: object
+      required: [lat, lng, obstacleType, severity]
+      properties:
+        lat:
+          type: number
+        lng:
+          type: number
+        obstacleType:
+          type: string
+          enum: [pothole, barrier, parked_vehicle, construction, other]
+        severity:
+          type: string
+          enum: [low, medium, high]
+        description:
+          type: string
+        affectsPathId:
+          type: ["integer", "null"]
+
+    Wallet:
+      type: object
+      required: [jawwalPoints, ecoPoints, totalEarned, totalSpent, transactions]
+      properties:
+        jawwalPoints:
+          type: integer
+        ecoPoints:
+          type: integer
+        totalEarned:
+          type: integer
+        totalSpent:
+          type: integer
+        transactions:
+          type: array
+          items:
+            $ref: "#/components/schemas/PointsTransaction"
+        redeemableRewards:
+          type: array
+          items:
+            $ref: "#/components/schemas/Reward"
+
+    PointsTransaction:
+      type: object
+      required: [id, type, points, category, description, createdAt]
+      properties:
+        id:
+          type: integer
+        type:
+          type: string
+          enum: [earn, spend]
+        points:
+          type: integer
+        category:
+          type: string
+          enum: [traffic, waste, accessibility, tourism, redemption]
+        description:
+          type: string
+        createdAt:
+          type: string
+
+    Reward:
+      type: object
+      required: [id, name, pointsCost, category, isAvailable]
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        pointsCost:
+          type: integer
+        category:
+          type: string
+        description:
+          type: string
+        isAvailable:
+          type: boolean
+
+    RedeemInput:
+      type: object
+      required: [rewardId]
+      properties:
+        rewardId:
+          type: integer
+
+    DashboardSummary:
+      type: object
+      required: [activeTrafficReports, pendingWasteReports, activeObstacles, totalUsers, totalPointsEarned, touristSpotsNearby, eventsThisWeek]
+      properties:
+        activeTrafficReports:
+          type: integer
+        pendingWasteReports:
+          type: integer
+        activeObstacles:
+          type: integer
+        totalUsers:
+          type: integer
+        totalPointsEarned:
+          type: integer
+        touristSpotsNearby:
+          type: integer
+        eventsThisWeek:
+          type: integer
+        congestionScore:
+          type: number
+        ecoScore:
+          type: number
+
+    ActivityItem:
+      type: object
+      required: [id, module, action, description, points, createdAt]
+      properties:
+        id:
+          type: integer
+        module:
+          type: string
+          enum: [traffic, waste, accessibility, tourism, points]
+        action:
+          type: string
+        description:
+          type: string
+        points:
+          type: ["integer", "null"]
+        username:
+          type: ["string", "null"]
+        createdAt:
+          type: string
+
+    LeaderboardEntry:
+      type: object
+      required: [rank, username, jawwalPoints, driverLevel, totalReports]
+      properties:
+        rank:
+          type: integer
+        username:
+          type: string
+        jawwalPoints:
+          type: integer
+        driverLevel:
+          type: string
+        totalReports:
+          type: integer
+        avatarInitials:
+          type: ["string", "null"]

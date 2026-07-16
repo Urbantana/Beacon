@@ -1,0 +1,36 @@
+Create a modern, fully interactive web application for "Urban Up" - a sustainable smart city and tourism platform. The application should be built using Python (Flask or FastAPI) for the backend and HTML5, Tailwind CSS, and JavaScript (with Leaflet.js or Mapbox for maps) for the frontend. 
+
+The platform must integrate four core urban challenges into a cohesive, gamified ecosystem with a unified user profile. The UI branding should feature a modern tech vibe using a premium purple/indigo color palette (matching the Urban Up brand identity).
+
+### 1. CORE PAGES & FEATURES TO BUILD:
+
+#### A. Main Dashboard & Tourism Hub
+- Interactive map showing local tourist spots, cultural events (such as "Laylak Kids" events), and local heritage products (like "Palestine Monopoly" games).
+- A unified "Smart Profile" for the user displaying their "Jawwal Rewards Points" balance, eco-achievements, and driver level.
+- Integration: When a tourist views a crowded event, the platform dynamically warns them about traffic around it and suggests alternative routes or parking zones in exchange for points.
+
+#### B. AI Traffic & Route Management (Traffic Hub)
+- Simulated interactive map that mimics real-time traffic (similar to Google Maps/Waze data integration).
+- An "AI Re-router" simulator: Users input a destination; if the main route is congested, the AI offers a "Smart Alternative Route" (distributing traffic dynamically).
+- "Jawwal Points System": If the user accepts the alternative route or parks in a recommended outer parking lot, they instantly earn "Jawwal Points" (incentive system to reduce congestion).
+
+#### C. "Safe Paths" Accessibility Hub (For Visually & Physically Impaired Tourists)
+- A highly accessible map view for blind and motor-disabled tourists, featuring high-contrast modes and voice-assistant simulations.
+- Accurate pathways database (Pre-loaded paths safe for wheelchairs/blind users instead of standard streets).
+- "Dynamic Obstacle Reporter": Users or sensors can report temporary/dynamic obstacles (potholes, temporary barriers) on the map. This instantly reroutes blind users using haptic/audio cues simulated in the UI.
+
+#### D. Smart Waste Management & Eco-Rewards (Eco Hub)
+- A feature address visual pollution on tourist paths. 
+- "Report Overflowing Bin": An interactive map where tourists or residents can report full trash bins or mixed waste, especially in "blind spots" where municipality trucks don't reach regularly.
+- "Gamified Disposal": Users can report proper waste sorting or clean-up and claim "Eco-Points" added directly to their Jawwal Points wallet.
+
+### 2. INTERSECTIONS & DATA COHESION (The Unified System):
+- **Traffic + Tourism + Points:** Choosing a less congested route to a tourist landmark rewards the user with "Jawwal Points" which can be redeemed for local products (e.g., Palestine Monopoly).
+- **Waste + Tourism:** Tourists reporting trash on historical pathways keeps the routes clean, and they get rewarded.
+- **Accessibility + Traffic:** The Safe Paths database is updated in real-time if a vehicle blocks a sidewalk, warning disabled users and alerting traffic enforcement.
+
+### 3. TECHNICAL SPECIFICATIONS:
+- Use SQLite for a lightweight local database to store: Users, Reports (traffic, waste, accessibility obstacles), and Points.
+- Use Leaflet.js (free and open-source) to render the interactive map, utilizing mock GeoJSON data to simulate paths, obstacles, green bins, and traffic zones.
+- Include a sidebar for easy navigation between: "Dashboard/Tourism", "Traffic & AI Routing", "Safe Paths", "Eco-Waste Reports", and "Jawwal Points Wallet".
+- Fully responsive design (mobile-first, as tourists and drivers use smartphones).
