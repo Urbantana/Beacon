@@ -10,6 +10,9 @@ import SafePaths from '@/pages/safe-paths';
 import EcoRewards from '@/pages/eco';
 import WalletPage from '@/pages/wallet';
 
+import { I18nProvider } from '@/lib/i18n-context';
+import { ThemeProvider } from '@/lib/theme-context';
+
 const queryClient = new QueryClient();
 
 function Router() {
@@ -28,14 +31,18 @@ function Router() {
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, '')}>
-          <Router />
-        </WouterRouter>
-        <Toaster />
-      </TooltipProvider>
-    </QueryClientProvider>
+    <ThemeProvider>
+      <I18nProvider>
+        <QueryClientProvider client={queryClient}>
+          <TooltipProvider>
+            <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, '')}>
+              <Router />
+            </WouterRouter>
+            <Toaster />
+          </TooltipProvider>
+        </QueryClientProvider>
+      </I18nProvider>
+    </ThemeProvider>
   );
 }
 
