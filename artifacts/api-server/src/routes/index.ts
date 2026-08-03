@@ -7,6 +7,8 @@ import wasteRouter from "./waste";
 import accessibilityRouter from "./accessibility";
 import pointsRouter from "./points";
 import dashboardRouter from "./dashboard";
+import municipalityRouter from "./municipality";
+import storeRouter from "./store";
 
 const router: IRouter = Router();
 
@@ -18,5 +20,7 @@ router.use(wasteRouter);
 router.use(accessibilityRouter);
 router.use(pointsRouter);
 router.use(dashboardRouter);
+router.use(municipalityRouter);
+router.use(storeRouter);
 
 export default router;
