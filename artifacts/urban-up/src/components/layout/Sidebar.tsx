@@ -19,6 +19,10 @@ import {
   Star,
   MessageSquare,
   BarChart3,
+  Heart,
+  BookOpen,
+  TriangleAlert,
+  Store,
 } from "lucide-react"
 import { useGetProfile } from "@workspace/api-client-react"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
@@ -52,6 +56,14 @@ export function Sidebar() {
     { href: "/suggestions", label: lang === "ar" ? "المقترحات"      : "Suggestions",  icon: TrendingUp },
     { href: "/complaints",  label: lang === "ar" ? "الشكاوى"        : "Complaints",   icon: AlertCircle },
     { href: "/fuel",        label: lang === "ar" ? "مراقبة الوقود"  : "Fuel Intel",   icon: Fuel },
+  ]
+
+  const inclusivityLinks = [
+    { href: "/services-directory", label: lang === "ar" ? "دليل الخدمات"    : "Services Directory", icon: Heart         },
+    { href: "/report-obstacle",    label: lang === "ar" ? "أبلغ عن عقبة"    : "Report Obstacle",    icon: TriangleAlert },
+    { href: "/awareness",          label: lang === "ar" ? "التوعية والتدريب" : "Awareness Courses",  icon: BookOpen      },
+    { href: "/bhimitkom",          label: lang === "ar" ? "جمعية بهمتكم"    : "Bhimitkom",          icon: Star          },
+    { href: "/store/bhimitkom",    label: lang === "ar" ? "متجر بهمتكم"     : "Bhimitkom Store",    icon: Store         },
   ]
 
   const adminLinks = [
@@ -122,6 +134,14 @@ export function Sidebar() {
           <SectionLabel label={lang === "ar" ? "المجتمع" : "Community"} />
           <nav className="flex flex-col gap-0.5">
             {communityLinks.map((link) => <NavLink key={link.href} {...link} />)}
+          </nav>
+        </div>
+
+        {/* Inclusivity */}
+        <div>
+          <SectionLabel label={lang === "ar" ? "الشمولية والإتاحة" : "Inclusivity"} />
+          <nav className="flex flex-col gap-0.5">
+            {inclusivityLinks.map((link) => <NavLink key={link.href} {...link} />)}
           </nav>
         </div>
 

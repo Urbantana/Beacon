@@ -26,6 +26,11 @@ import ComplaintsPage from '@/pages/complaints';
 import ComplaintsCreatePage from '@/pages/complaints-create';
 import FuelPage from '@/pages/fuel';
 import AdminStatusPage from '@/pages/admin-status';
+import ServicesDirectoryPage from '@/pages/services-directory';
+import ReportObstaclePage from '@/pages/report-obstacle';
+import AwarenessPage from '@/pages/awareness';
+import BhimitkomPage from '@/pages/bhimitkom';
+import BhimitkomStorePage from '@/pages/store-bhimitkom';
 
 import { I18nProvider } from '@/lib/i18n-context';
 import { ThemeProvider } from '@/lib/theme-context';
@@ -57,6 +62,11 @@ function Router() {
       <Route path="/complaints" component={ComplaintsPage} />
       <Route path="/fuel" component={FuelPage} />
       <Route path="/admin/status" component={AdminStatusPage} />
+      <Route path="/services-directory" component={ServicesDirectoryPage} />
+      <Route path="/report-obstacle" component={ReportObstaclePage} />
+      <Route path="/awareness" component={AwarenessPage} />
+      <Route path="/bhimitkom" component={BhimitkomPage} />
+      <Route path="/store/bhimitkom" component={BhimitkomStorePage} />
       <Route component={NotFound} />
     </Switch>
   );

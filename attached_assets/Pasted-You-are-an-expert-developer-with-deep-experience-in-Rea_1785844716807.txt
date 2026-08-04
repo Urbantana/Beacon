@@ -1,0 +1,62 @@
+You are an expert developer with deep experience in React, Next.js (App Router), TypeScript, SQLite, Tailwind CSS, and platform integration. You are working on the PalTurk project – a smart city and tourism platform.
+
+Your task is to integrate features and content from **Bhimitkom Association** – a leading Palestinian organization for youth with disabilities – into the PalTurk platform, to enhance inclusivity and accessibility for all users.
+
+## 🎯 Features to Implement (in parallel):
+
+### 1. Services Directory (/services-directory)
+- A page listing organizations and services available for persons with disabilities in Palestine.
+- Include: Bhimitkom Association, Palestinian Independent Commission for Human Rights, AMAN Coalition, Palestinian Vision Organization, and others.
+- For each organization: name, description, phone, email, location, and services offered.
+- Interactive map showing organization locations.
+- Arabic/English with RTL support.
+
+### 2. Obstacle Reporting System (/report-obstacle)
+- A form for reporting obstacles (broken sidewalks, unsafe paths, missing ramps, etc.).
+- Fields: location (map picker), description, obstacle type, photo (optional).
+- Reports are linked to the user account and earn Jawwal Points.
+- Municipality dashboard to view and update report status (Pending, Under Review, In Progress, Resolved).
+- Arabic/English support.
+
+### 3. Awareness & Training Platform (/awareness)
+- A page displaying courses and awareness videos on disability etiquette, sign language, white cane usage, and more.
+- Content developed in collaboration with Bhimitkom Association.
+- Users can enroll in courses and receive certificates upon completion.
+- Arabic/English support.
+
+### 4. Bhimitkom Store Section (/store/bhimitkom)
+- A dedicated section in the store for products and services offered by youth with disabilities (embroidery, ceramics, graphic design, proofreading, photography, editing).
+- Display: product name, description, price (in Points or ILS), and image.
+- Users can purchase or redeem using Jawwal Points.
+- Show the story behind the product and its creator.
+
+### 5. Bhimitkom About Page (/bhimitkom)
+- A page introducing Bhimitkom Association: vision, mission, team, achievements, and videos.
+- Contact information: info@bhimitkom.ps, +972 59-849-5030, Facebook page.
+- Display the latest important posts from the association.
+- Arabic/English with RTL support.
+
+## 🔗 Integration Requirements:
+- Add links to all new features in the Sidebar under "Community Services" or "Inclusivity" section.
+- Full Arabic/English translation with RTL support.
+- Integrate with the existing Jawwal Points system for reporting and store features.
+- Use the existing Leaflet map component for the services directory and obstacle reporting.
+
+## 📁 Files to Create or Modify:
+- `client/src/pages/services-directory.tsx`
+- `client/src/pages/report-obstacle.tsx`
+- `client/src/pages/awareness.tsx`
+- `client/src/pages/bhimitkom.tsx`
+- `client/src/pages/store/bhimitkom.tsx`
+- `app/api/reports/route.ts`
+- `app/api/organizations/route.ts`
+- Update Sidebar.tsx
+- Update translations.ts (Arabic/English)
+
+## ✅ Completion Criteria:
+- All pages render and display real or seeded data correctly.
+- Full Arabic and English language support.
+- Integration with the points system and map component.
+- Responsive design and WCAG 2.1 AA compliant for accessibility.
+
+**Proceed immediately. Implement all features in parallel. Do not stop until all are complete. Show results with screenshots.**

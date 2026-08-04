@@ -19,6 +19,8 @@ import complaintsRouter from "./complaints";
 import chatbotRouter from "./chatbot";
 import fuelRouter from "./fuel";
 import adminRouter from "./admin";
+import organizationsRouter from "./organizations";
+import awarenessRouter from "./awareness";
 
 const router: IRouter = Router();
 
@@ -42,5 +44,7 @@ router.use(complaintsRouter);
 router.use(chatbotRouter);
 router.use(fuelRouter);
 router.use(adminRouter);
+router.use(organizationsRouter);
+router.use(awarenessRouter);
 
 export default router;

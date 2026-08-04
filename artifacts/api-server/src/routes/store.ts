@@ -75,7 +75,7 @@ async function seedHeritageItems() {
   }
 }
 
-router.get("/store/heritage", async (_req, res): Promise<void> => {
+router.get("/store/heritage", async (req, res): Promise<void> => {
   await seedHeritageItems();
   const items = await db.select().from(rewardsTable).where(eq(rewardsTable.category, "heritage"));
   const [user] = await db.select({ jawwalPoints: usersTable.jawwalPoints }).from(usersTable).where(eq(usersTable.id, await getAppUserId(req)));
@@ -91,6 +91,18 @@ router.get("/store/heritage", async (_req, res): Promise<void> => {
       isAvailable: r.isAvailable === 1,
     })),
   });
+});
+
+router.get("/store/bhimitkom", async (req, res): Promise<void> => {
+  const items = await db.select().from(rewardsTable).where(eq(rewardsTable.category, "bhimitkom"));
+  res.json(items.map(r => ({
+    id: r.id,
+    name: r.name,
+    pointsCost: r.pointsCost,
+    category: r.category,
+    description: r.description,
+    isAvailable: r.isAvailable === 1,
+  })));
 });
 
 router.post("/store/redeem", async (req, res): Promise<void> => {
