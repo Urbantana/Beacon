@@ -63,6 +63,25 @@ const SEED_TOURS = [
     tourDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
     status: "upcoming",
   },
+  {
+    title: "Almeena Cottage Getaway",
+    titleAr: "إقامة كوخ المينا",
+    description: "Escape to Almeena Cottage (كوخ المينا), a charming rural retreat nestled in the Palestinian countryside. Enjoy fresh air, local hospitality, and the quiet beauty of nature. Perfect for families and groups seeking an authentic village experience.",
+    descriptionAr: "استمتع بتجربة ريفية أصيلة في كوخ المينا، ملاذ ريفي ساحر وسط الطبيعة الفلسطينية. هواء نقي، ضيافة محلية، وجمال الطبيعة الهادئة — تجربة مثالية للعائلات والمجموعات.",
+    category: "nature",
+    location: "Palestinian Countryside",
+    locationAr: "الريف الفلسطيني",
+    lat: 31.8950, lng: 35.1850,
+    durationMinutes: 480,
+    maxParticipants: 16,
+    currentParticipants: 0,
+    pricePoints: 120,
+    pointsReward: 90,
+    guideId: 1,
+    guideName: "Almeena Cottage Host",
+    tourDate: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000),
+    status: "upcoming",
+  },
 ];
 
 async function seedTours() {

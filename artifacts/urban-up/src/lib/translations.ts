@@ -371,6 +371,13 @@ export const translations = {
   fuelConfidence:       { en: 'Confidence',                    ar: 'الثقة' },
   fuelMyBookings:       { en: 'My Bookings',                   ar: 'حجوزاتي' },
   fuelEarnPts:          { en: 'Report & earn 20 pts',          ar: 'أبلغ واكسب 20 نقطة' },
+  fuelExternalSources:  { en: 'External Sources',              ar: 'مصادر خارجية' },
+  fuelExternalDesc:     { en: 'Check these community-powered sites for additional live fuel updates.', ar: 'تحقق من هذه المواقع للحصول على معلومات وقود محدّثة من المجتمع.' },
+  fuelOpen:             { en: 'Open ↗',                        ar: 'فتح ←' },
+
+  // ── Almeena Cottage ──────────────────────────────────────
+  almeenaTitle:         { en: 'Almeena Cottage Getaway',       ar: 'إقامة كوخ المينا' },
+  almeenaDesc:          { en: 'Charming rural retreat in the Palestinian countryside', ar: 'ملاذ ريفي ساحر وسط الطبيعة الفلسطينية' },
 
   // ── Chatbot ──────────────────────────────────────────────
   chatbotTitle:         { en: 'PalTur Assistant',              ar: 'مساعد بالتور' },

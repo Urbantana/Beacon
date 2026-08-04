@@ -246,6 +246,50 @@ export default function FuelPage() {
                 ].map((tip, i) => <p key={i} className="text-xs text-muted-foreground">{tip}</p>)}
               </CardContent>
             </Card>
+
+            {/* External sources */}
+            <Card className="border-blue-200 dark:border-blue-900/50">
+              <CardContent className="p-4 space-y-3">
+                <p className="text-sm font-semibold">
+                  🔗 {lang === "ar" ? "مصادر خارجية" : "External Sources"}
+                </p>
+                <p className="text-xs text-muted-foreground">
+                  {lang === "ar"
+                    ? "تحقق من هذه المواقع للحصول على معلومات وقود محدّثة من المجتمع."
+                    : "Check these community-powered sites for additional live fuel updates."}
+                </p>
+                <div className="flex flex-col gap-2">
+                  <a
+                    href="https://www.kaziyat.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-between rounded-lg border border-border bg-background px-3 py-2.5 text-sm font-medium transition-colors hover:bg-muted group"
+                  >
+                    <div className={cn("flex items-center gap-2", isRtl && "flex-row-reverse")}>
+                      <span className="text-base">⛽</span>
+                      <span>Kaziyat.com</span>
+                    </div>
+                    <span className="text-xs text-muted-foreground group-hover:text-primary transition-colors">
+                      {lang === "ar" ? "فتح ←" : "Open ↗"}
+                    </span>
+                  </a>
+                  <a
+                    href="https://www.palhub.ps"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-between rounded-lg border border-border bg-background px-3 py-2.5 text-sm font-medium transition-colors hover:bg-muted group"
+                  >
+                    <div className={cn("flex items-center gap-2", isRtl && "flex-row-reverse")}>
+                      <span className="text-base">🌐</span>
+                      <span>PalHub</span>
+                    </div>
+                    <span className="text-xs text-muted-foreground group-hover:text-primary transition-colors">
+                      {lang === "ar" ? "فتح ←" : "Open ↗"}
+                    </span>
+                  </a>
+                </div>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </div>
