@@ -1,0 +1,75 @@
+You are an expert full‑stack developer with deep experience in React, Next.js (App Router), TypeScript, SQLite, Tailwind CSS, and i18n. You are given an existing project called PalTur – a smart city & tourism platform built on Replit. Your task is to generate the complete code for an Events System that will be integrated into PalTur. The system must allow municipalities to create, manage, and promote events, and allow users to browse, filter, book, and earn/redeem Jawwal Points for attending events.
+
+The current project structure is:
+PalTur/
+├── app/
+│   ├── api/               (existing)
+│   ├── dashboard/         (existing)
+│   ├── traffic/           (existing)
+│   ├── safe-paths/        (existing)
+│   ├── eco/               (existing)
+│   ├── wallet/            (existing)
+│   ├── store/             (existing)
+│   ├── municipality/      (existing)
+│   ├── layout.tsx
+│   ├── page.tsx
+│   └── globals.css
+├── components/
+│   ├── Sidebar.tsx
+│   ├── ThemeToggle.tsx
+│   └── ...
+├── db/
+│   ├── schema.sql
+│   └── seed.ts
+├── hooks/
+│   └── useTranslation.ts
+├── i18n/
+│   └── translations.ts
+├── lib/
+│   └── db.ts              (database connection helper)
+└── package.json
+
+Now generate the complete Events System with the following requirements:
+
+1. Database Schema (SQLite):
+   - Create two tables: events and event_bookings
+   - events columns: id (INTEGER PRIMARY KEY), title, title_ar (TEXT), description, description_ar (TEXT), category (TEXT: cultural, entertainment, educational, sports), location, location_ar (TEXT), latitude, longitude (REAL), start_date, end_date (DATETIME), price (REAL, default 0), points_required (INTEGER, default 0), image_url (TEXT), capacity (INTEGER, default 0), booked (INTEGER, default 0), status (TEXT: upcoming, ongoing, completed, cancelled), created_by (TEXT), created_at, updated_at (DATETIME)
+   - event_bookings columns: id, event_id, user_id, booking_date, status (confirmed, cancelled, attended), points_used
+
+2. API Routes (Next.js App Router):
+   - GET /api/events – list events with filters (category, status, limit)
+   - POST /api/events – create a new event (municipality only)
+   - GET /api/events/[id] – get single event
+   - PUT /api/events/[id] – update event
+   - DELETE /api/events/[id] – delete event
+   - POST /api/events/book – book a seat (check points if points_required > 0)
+   - Include validation and error handling
+
+3. Frontend Pages:
+   - /events – Browse events with filtering (category, status) and search
+   - /events/[id] – Event details with description, location map, booking form, points requirement
+   - /events/create – Form for municipality to add new events (restricted access, simulate role check)
+
+4. UI Components:
+   - EventCard – displays event summary (title, date, location, price/points, status badge, booked/capacity)
+   - EventsList – grid or list of EventCards
+   - EventFilters – filter controls (category dropdown, status dropdown, reset)
+   - EventBooking – booking form (shows points required, current user points, booking button)
+
+5. Integration with Existing PalTur Features:
+   - Jawwal Points Wallet: deduct points when booking events that require points
+   - Translations: all UI text must support Arabic and English using existing i18n system
+   - Sidebar Navigation: add "Events" menu item with icon
+   - Accessibility: follow WCAG 2.1 AA standards (ARIA labels, semantic HTML, keyboard navigable)
+
+6. Seed Data:
+   - Provide at least 5 sample events with varied categories, dates, and statuses
+
+Generate the full code for all new files and modifications to existing files in a single response. Structure your output as a complete prompt that an AI can execute to produce the final code. Include:
+- SQL statements to add tables
+- Complete code for each new file with full path
+- Code modifications to existing files with clear indication of what to change
+- Database migration instructions
+- Testing instructions
+
+Use TypeScript for all new files. Follow existing coding style (functional components, hooks). Use Tailwind CSS for styling with dark mode support via dark:. Assume the project uses SQLite with a db.ts helper exporting getDb(). For authentication, assume getCurrentUser() returns a user object with id and points (mock it for now). For municipality role, assume user.role === 'municipality' for creating events. All API routes must return JSON with appropriate status codes. Ensure Arabic (ar) and English (en) translations are complete.

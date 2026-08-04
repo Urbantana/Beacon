@@ -156,7 +156,7 @@ export default function StorePage() {
               variant={activeCategory === cat ? "default" : "outline"}
               onClick={() => setActiveCategory(cat)}
             >
-              {t(cat as any) || CATEGORY_LABELS[cat] || cat}
+              {cat === "all" ? t("allCategories") : cat === "boardGames" ? t("boardGames") : cat === "textiles" ? t("textiles") : cat === "artPrints" ? t("artPrints") : cat === "foodGifts" ? t("foodGifts") : cat}
             </Button>
           ))}
         </div>

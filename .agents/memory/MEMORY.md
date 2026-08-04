@@ -1,0 +1,6 @@
+- [PalTur stack overview](paltur-stack.md) — Express 5 + Drizzle/PostgreSQL + React+Vite+Wouter; all API routes in artifacts/api-server/src/routes/
+- [Express route ordering](express-route-order.md) — specific routes (/events/my-bookings) must be declared BEFORE wildcard /:id routes or Express matches wrong handler
+- [Drizzle push](drizzle-push.md) — run `pnpm --filter @workspace/db exec drizzle-kit push` to apply schema changes; no manual SQL needed
+- [i18n dynamic key lookup](i18n-dynamic-keys.md) — calling t(dynamicKey as any) crashes if key is missing; always use explicit key mapping or check key existence first
+- [Heritage store seeding](heritage-store-seeding.md) — store.ts seeds HERITAGE_ITEMS on first GET /api/store/heritage if category="heritage" count < expected; idempotent by name check
+- [Events seeding](events-seeding.md) — events.ts seeds SEED_EVENTS on first GET /api/events if table is empty; only seeds once

@@ -9,6 +9,10 @@ import Traffic from '@/pages/traffic';
 import SafePaths from '@/pages/safe-paths';
 import EcoRewards from '@/pages/eco';
 import WalletPage from '@/pages/wallet';
+import MunicipalityPage from '@/pages/municipality';
+import StorePage from '@/pages/store';
+import EventsPage from '@/pages/events';
+import EventsCreatePage from '@/pages/events-create';
 
 import { I18nProvider } from '@/lib/i18n-context';
 import { ThemeProvider } from '@/lib/theme-context';
@@ -24,6 +28,10 @@ function Router() {
       <Route path="/safe-paths" component={SafePaths} />
       <Route path="/eco" component={EcoRewards} />
       <Route path="/wallet" component={WalletPage} />
+      <Route path="/municipality" component={MunicipalityPage} />
+      <Route path="/store" component={StorePage} />
+      <Route path="/events" component={EventsPage} />
+      <Route path="/events/create" component={EventsCreatePage} />
       <Route component={NotFound} />
     </Switch>
   );

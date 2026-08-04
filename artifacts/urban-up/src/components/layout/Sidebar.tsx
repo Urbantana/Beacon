@@ -8,6 +8,7 @@ import {
   Wallet,
   Building2,
   ShoppingBag,
+  CalendarDays,
 } from "lucide-react"
 import { useGetProfile } from "@workspace/api-client-react"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
@@ -27,6 +28,7 @@ export function Sidebar() {
   ]
 
   const cityServiceLinks = [
+    { href: "/events",  labelKey: "navEvents"  as const, icon: CalendarDays },
     { href: "/wallet",  labelKey: "navWallet"  as const, icon: Wallet },
     { href: "/store",   labelKey: "navStore"   as const, icon: ShoppingBag },
   ]

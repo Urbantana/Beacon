@@ -9,6 +9,7 @@ import pointsRouter from "./points";
 import dashboardRouter from "./dashboard";
 import municipalityRouter from "./municipality";
 import storeRouter from "./store";
+import eventsRouter from "./events";
 
 const router: IRouter = Router();
 
@@ -22,5 +23,6 @@ router.use(pointsRouter);
 router.use(dashboardRouter);
 router.use(municipalityRouter);
 router.use(storeRouter);
+router.use(eventsRouter);
 
 export default router;
