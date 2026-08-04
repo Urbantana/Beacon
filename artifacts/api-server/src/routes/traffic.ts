@@ -1,9 +1,9 @@
 import { Router, type IRouter } from "express";
+import { getAppUserId } from "../lib/getAppUserId";
 import { db, trafficReportsTable, usersTable, pointsTransactionsTable, activityFeedTable } from "@workspace/db";
 import { eq, sql } from "drizzle-orm";
 
 const router: IRouter = Router();
-const DEFAULT_USER_ID = 1;
 
 router.get("/traffic/reports", async (_req, res): Promise<void> => {
   const reports = await db.select().from(trafficReportsTable).orderBy(trafficReportsTable.createdAt);
@@ -25,18 +25,18 @@ router.post("/traffic/reports", async (req, res): Promise<void> => {
     res.status(400).json({ error: "Missing required fields" });
     return;
   }
-  const [user] = await db.select().from(usersTable).where(eq(usersTable.id, DEFAULT_USER_ID));
+  const [user] = await db.select().from(usersTable).where(eq(usersTable.id, await getAppUserId(req)));
   const [report] = await db.insert(trafficReportsTable).values({
     lat, lng, severity, description,
     status: "active",
-    userId: DEFAULT_USER_ID,
+    userId: await getAppUserId(req),
     reporterUsername: user?.username ?? "Anonymous",
   }).returning();
 
   // Award 10 points for reporting
   await db.update(usersTable)
     .set({ jawwalPoints: sql`${usersTable.jawwalPoints} + 10`, totalReports: sql`${usersTable.totalReports} + 1` })
-    .where(eq(usersTable.id, DEFAULT_USER_ID));
+    .where(eq(usersTable.id, await getAppUserId(req)));
 
   await db.insert(activityFeedTable).values({
     module: "traffic",
@@ -44,7 +44,7 @@ router.post("/traffic/reports", async (req, res): Promise<void> => {
     description: `Reported ${severity} traffic incident`,
     points: 10,
     username: user?.username ?? "Anonymous",
-    userId: DEFAULT_USER_ID,
+    userId: await getAppUserId(req),
   });
 
   res.status(201).json({
@@ -112,13 +112,13 @@ router.post("/traffic/accept-alternative", async (req, res): Promise<void> => {
   const bonus = usedParkingZone ? 25 : 0;
   const total = pointsAmount + bonus;
 
-  const [user] = await db.select().from(usersTable).where(eq(usersTable.id, DEFAULT_USER_ID));
+  const [user] = await db.select().from(usersTable).where(eq(usersTable.id, await getAppUserId(req)));
   await db.update(usersTable)
     .set({ jawwalPoints: sql`${usersTable.jawwalPoints} + ${total}` })
-    .where(eq(usersTable.id, DEFAULT_USER_ID));
+    .where(eq(usersTable.id, await getAppUserId(req)));
 
   const [tx] = await db.insert(pointsTransactionsTable).values({
-    userId: DEFAULT_USER_ID,
+    userId: await getAppUserId(req),
     type: "earn",
     points: total,
     category: "traffic",
@@ -131,7 +131,7 @@ router.post("/traffic/accept-alternative", async (req, res): Promise<void> => {
     description: `Chose smart alternative route and earned ${total} points`,
     points: total,
     username: user?.username ?? "Anonymous",
-    userId: DEFAULT_USER_ID,
+    userId: await getAppUserId(req),
   });
 
   res.json({

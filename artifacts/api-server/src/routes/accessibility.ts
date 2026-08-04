@@ -1,9 +1,9 @@
 import { Router, type IRouter } from "express";
+import { getAppUserId } from "../lib/getAppUserId";
 import { db, accessibilityPathsTable, obstaclesTable, usersTable, activityFeedTable } from "@workspace/db";
 import { eq, sql } from "drizzle-orm";
 
 const router: IRouter = Router();
-const DEFAULT_USER_ID = 1;
 
 // Convert flat waypoints array to array-of-pairs for API response
 function flatToWaypoints(flat: number[]): number[][] {
@@ -44,19 +44,19 @@ router.post("/accessibility/obstacles", async (req, res): Promise<void> => {
     res.status(400).json({ error: "Missing required fields" });
     return;
   }
-  const [user] = await db.select().from(usersTable).where(eq(usersTable.id, DEFAULT_USER_ID));
+  const [user] = await db.select().from(usersTable).where(eq(usersTable.id, await getAppUserId(req)));
   const [obstacle] = await db.insert(obstaclesTable).values({
     lat, lng, obstacleType, severity,
     description: description ?? "",
     affectsPathId: affectsPathId ?? null,
     isActive: true,
-    userId: DEFAULT_USER_ID,
+    userId: await getAppUserId(req),
     reporterUsername: user?.username ?? "Anonymous",
   }).returning();
 
   await db.update(usersTable)
     .set({ jawwalPoints: sql`${usersTable.jawwalPoints} + 15`, totalReports: sql`${usersTable.totalReports} + 1` })
-    .where(eq(usersTable.id, DEFAULT_USER_ID));
+    .where(eq(usersTable.id, await getAppUserId(req)));
 
   await db.insert(activityFeedTable).values({
     module: "accessibility",
@@ -64,7 +64,7 @@ router.post("/accessibility/obstacles", async (req, res): Promise<void> => {
     description: `Reported ${obstacleType.replace(/_/g, " ")} obstacle on safe path`,
     points: 15,
     username: user?.username ?? "Anonymous",
-    userId: DEFAULT_USER_ID,
+    userId: await getAppUserId(req),
   });
 
   res.status(201).json({

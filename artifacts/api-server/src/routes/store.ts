@@ -1,9 +1,9 @@
 import { Router, type IRouter } from "express";
+import { getAppUserId } from "../lib/getAppUserId";
 import { db, rewardsTable, usersTable, pointsTransactionsTable, activityFeedTable } from "@workspace/db";
 import { eq, sql, like } from "drizzle-orm";
 
 const router: IRouter = Router();
-const DEFAULT_USER_ID = 1;
 
 // Heritage items seeded once on first request
 const HERITAGE_ITEMS = [
@@ -78,7 +78,7 @@ async function seedHeritageItems() {
 router.get("/store/heritage", async (_req, res): Promise<void> => {
   await seedHeritageItems();
   const items = await db.select().from(rewardsTable).where(eq(rewardsTable.category, "heritage"));
-  const [user] = await db.select({ jawwalPoints: usersTable.jawwalPoints }).from(usersTable).where(eq(usersTable.id, DEFAULT_USER_ID));
+  const [user] = await db.select({ jawwalPoints: usersTable.jawwalPoints }).from(usersTable).where(eq(usersTable.id, await getAppUserId(req)));
 
   res.json({
     userPoints: user?.jawwalPoints ?? 0,
@@ -101,7 +101,7 @@ router.post("/store/redeem", async (req, res): Promise<void> => {
   const [item] = await db.select().from(rewardsTable).where(eq(rewardsTable.id, id));
   if (!item) { res.status(404).json({ error: "Item not found" }); return; }
 
-  const [user] = await db.select().from(usersTable).where(eq(usersTable.id, DEFAULT_USER_ID));
+  const [user] = await db.select().from(usersTable).where(eq(usersTable.id, await getAppUserId(req)));
   if (!user || user.jawwalPoints < item.pointsCost) {
     res.status(400).json({ error: "Insufficient Jawwal Points" });
     return;
@@ -109,10 +109,10 @@ router.post("/store/redeem", async (req, res): Promise<void> => {
 
   await db.update(usersTable)
     .set({ jawwalPoints: sql`${usersTable.jawwalPoints} - ${item.pointsCost}` })
-    .where(eq(usersTable.id, DEFAULT_USER_ID));
+    .where(eq(usersTable.id, await getAppUserId(req)));
 
   const [tx] = await db.insert(pointsTransactionsTable).values({
-    userId: DEFAULT_USER_ID,
+    userId: await getAppUserId(req),
     type: "spend",
     points: item.pointsCost,
     category: "redemption",
@@ -125,7 +125,7 @@ router.post("/store/redeem", async (req, res): Promise<void> => {
     description: `Redeemed "${item.name}" for ${item.pointsCost} Jawwal Points`,
     points: item.pointsCost,
     username: user.username,
-    userId: DEFAULT_USER_ID,
+    userId: await getAppUserId(req),
   });
 
   res.json({

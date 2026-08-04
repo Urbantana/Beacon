@@ -1,0 +1,24 @@
+kind = "mobile"
+previewPath = "/paltur-mobile/"
+title = "PalTur Mobile"
+description = "The mobile companion app for PalTur — a smart city and tourism platform for Palestine. Shows live city stats, lets users browse and book cultural events, manage their Jawwal Points wallet and level progress, redeem heritage store items, and report waste or obstacles via the camera. Bilingual Arabic/English with RTL support and dark/light theme."
+version = "1.0.0"
+id = "artifacts/paltur-mobile"
+router = "expo-domain"
+
+[[services]]
+name = "expo"
+ensurePreviewReachable = "/status"
+paths = [ "/paltur-mobile/" ]
+localPort = 23392
+
+[services.development]
+run = "pnpm --filter @workspace/paltur-mobile run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/paltur-mobile", "run", "build" ]
+run = [ "pnpm", "--filter", "@workspace/paltur-mobile", "run", "serve" ]
+
+[services.env]
+PORT = "23392"
+BASE_PATH = "/paltur-mobile/"

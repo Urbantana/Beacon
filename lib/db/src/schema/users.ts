@@ -1,4 +1,4 @@
-import { pgTable, text, serial, integer, timestamp } from "drizzle-orm/pg-core";
+import { pgTable, text, serial, integer, timestamp, varchar } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod/v4";
 
@@ -11,6 +11,7 @@ export const usersTable = pgTable("users", {
   driverLevel: text("driver_level").notNull().default("Bronze"),
   totalReports: integer("total_reports").notNull().default(0),
   achievements: text("achievements").array().notNull().default([]),
+  replitId: varchar("replit_id", { length: 255 }).unique(),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
 });
 

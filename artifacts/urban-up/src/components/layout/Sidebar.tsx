@@ -9,15 +9,19 @@ import {
   Building2,
   ShoppingBag,
   CalendarDays,
+  LogIn,
+  LogOut,
 } from "lucide-react"
 import { useGetProfile } from "@workspace/api-client-react"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { useI18n } from "@/lib/i18n-context"
+import { useAuth } from "@workspace/replit-auth-web"
 
 export function Sidebar() {
   const [location] = useLocation()
   const { data: profile } = useGetProfile()
   const { t, isRtl } = useI18n()
+  const { isAuthenticated, user, login, logout, isLoading: authLoading } = useAuth()
 
   const cityControlLinks = [
     { href: "/dashboard",     labelKey: "navDashboard"     as const, icon: LayoutDashboard },
@@ -123,6 +127,27 @@ export function Sidebar() {
               <div className="h-2 w-12 bg-sidebar-accent rounded animate-pulse" />
             </div>
           </div>
+        )}
+
+        {/* Sign in / Sign out */}
+        {!authLoading && (
+          <button
+            onClick={isAuthenticated ? logout : login}
+            className={cn(
+              "w-full mt-2 flex items-center gap-2 rounded-lg px-3 py-2 text-xs font-medium transition-colors",
+              isAuthenticated
+                ? "text-red-400 hover:bg-sidebar-accent/50"
+                : "text-primary hover:bg-sidebar-accent/50",
+              isRtl && "flex-row-reverse"
+            )}
+          >
+            {isAuthenticated
+              ? <LogOut className="size-3.5 shrink-0" />
+              : <LogIn className="size-3.5 shrink-0" />}
+            {isAuthenticated
+              ? (isRtl ? "تسجيل الخروج" : "Sign Out")
+              : (isRtl ? "تسجيل الدخول" : "Sign In with Replit")}
+          </button>
         )}
       </div>
     </div>

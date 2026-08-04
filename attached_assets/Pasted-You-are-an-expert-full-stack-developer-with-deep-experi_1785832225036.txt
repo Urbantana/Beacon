@@ -1,0 +1,106 @@
+You are an expert full-stack developer with deep experience in React, Next.js (App Router), TypeScript, SQLite, Tailwind CSS, React Native/Expo, and authentication systems. You are working on the PalTur project – a smart city and tourism platform. The project currently has: a working Events System (browse and create pages), a Heritage Store, a Jawwal Points Wallet with levels, a Municipality Dashboard with heatmaps, bilingual Arabic/English support with RTL, and dark/light theme.
+
+Your task is to implement THREE major features in parallel. Do not stop until all three are complete and tested.
+
+---
+
+## 🎯 Feature 1: Event Detail Page (Highest Priority)
+
+**Goal:** Build a dedicated event detail page at `/events/[id]` that shows full information for each event.
+
+**Requirements:**
+1. Create route `/events/:id` in the React app (Next.js App Router).
+2. Page must include:
+   - Hero banner with category color + emoji
+   - Full bilingual description (Arabic/English)
+   - Date/time and organizer info
+   - Embedded Leaflet map centered on event lat/lng (reuse existing map component if available)
+   - Live capacity indicator (progress bar showing booked/total)
+   - Points required and points earned displayed prominently
+   - Inline booking form (same mutation as browse page)
+   - "Back to Events" breadcrumb
+3. Reuse existing components (EventCard, booking mutation, translations).
+4. Ensure WCAG 2.1 AA accessibility (ARIA labels, keyboard navigation).
+5. Add translations for all new text in both Arabic and English.
+
+**API:** The API already supports `GET /api/events/:id`. Use it.
+
+**Relevant existing files:** Look for events page at `app/events/page.tsx` or `artifacts/urban-up/src/pages/events.tsx`. Find the booking mutation logic and reuse it.
+
+---
+
+## 📱 Feature 2: Mobile App (React Native / Expo)
+
+**Goal:** Create a native mobile app for PalTur so users can access the platform from their phones.
+
+**Requirements:**
+1. Create a new Expo project alongside the existing web + API (do not break the web app).
+2. Core screens:
+   - Dashboard (city overview with stats and map)
+   - Events (browse + book)
+   - Wallet (points balance, level, history)
+   - Heritage Store (redeem items)
+   - Eco report (camera-based waste reporting)
+3. Reuse the existing Express API (`/api/*` endpoints) — no backend changes needed.
+4. Bilingual (Arabic/English) with RTL support matching the web app.
+5. Push notification stubs for event reminders (placeholder for now).
+6. Follow the same design language (colors, fonts, dark/light mode if possible).
+
+**Structure:** Place the mobile app in a new folder `mobile/` at the root of the project.
+
+**Existing API routes to reuse:**
+- `GET /api/events`
+- `POST /api/events/book`
+- `GET /api/wallet`
+- `GET /api/store/items`
+- `POST /api/store/redeem`
+- `GET /api/municipality/heatmap`
+
+---
+
+## 🔐 Feature 3: Real User Accounts (Authentication)
+
+**Goal:** Replace the hardcoded user (ID=1) with real authentication so each person has their own points, bookings, and redemptions.
+
+**Requirements:**
+1. Integrate Replit Auth (or Clerk) on the Express backend.
+2. Replace `DEFAULT_USER_ID = 1` across all route files with session-aware middleware.
+3. User registration must auto-create a DB row in the `users` table (it already exists).
+4. Frontend:
+   - Login/Logout flow
+   - Protected routes that redirect to login
+   - Existing pages (leaderboard, wallet, events) show the current user's own data
+5. No hardcoded IDs anywhere in the codebase.
+6. Ensure the leaderboard aggregates real user data.
+
+**Files to modify:**
+- All route files currently using `DEFAULT_USER_ID = 1`:
+  - `artifacts/api-server/src/routes/waste.ts`
+  - `artifacts/api-server/src/routes/accessibility.ts`
+  - `artifacts/api-server/src/routes/points.ts`
+  - `artifacts/api-server/src/routes/events.ts`
+  - `artifacts/api-server/src/routes/store.ts`
+  - `artifacts/api-server/src/routes/municipality.ts`
+- `lib/db/src/schema/users.ts` (already exists)
+- `artifacts/urban-up/src/App.tsx` (add auth wrapper)
+
+**Authentication approach:** Use Replit's built-in Auth if available, otherwise implement Clerk. The backend should have session middleware that sets `req.user` for all authenticated requests.
+
+---
+
+## 📋 General Guidelines
+
+- **Code Quality:** Write clean, well-structured, and commented code.
+- **Consistency:** Follow the existing coding style (functional components, hooks, Tailwind CSS).
+- **Testing:** Test each feature manually after implementation. Provide instructions if needed.
+- **Documentation:** Add comments for complex logic and update README if applicable.
+
+## ✅ Completion Criteria
+
+- [ ] Feature 1: Event detail page works at `/events/1` (or any existing event ID)
+- [ ] Feature 2: Mobile app runs with `npm start` in the `mobile/` folder and shows data from the API
+- [ ] Feature 3: Users can sign up, log in, and see their own points and bookings. The leaderboard shows real data.
+
+---
+
+**Proceed immediately. Execute all three features in parallel. Do not stop until all are complete. Show me the results.**

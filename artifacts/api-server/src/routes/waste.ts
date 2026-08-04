@@ -1,9 +1,9 @@
 import { Router, type IRouter } from "express";
+import { getAppUserId } from "../lib/getAppUserId";
 import { db, wasteReportsTable, usersTable, pointsTransactionsTable, activityFeedTable } from "@workspace/db";
 import { eq, sql } from "drizzle-orm";
 
 const router: IRouter = Router();
-const DEFAULT_USER_ID = 1;
 
 const ECO_POINTS_MAP: Record<string, number> = {
   overflowing_bin: 30,
@@ -28,13 +28,13 @@ router.post("/waste/reports", async (req, res): Promise<void> => {
     return;
   }
   const ecoPoints = ECO_POINTS_MAP[type] ?? 15;
-  const [user] = await db.select().from(usersTable).where(eq(usersTable.id, DEFAULT_USER_ID));
+  const [user] = await db.select().from(usersTable).where(eq(usersTable.id, await getAppUserId(req)));
 
   const [report] = await db.insert(wasteReportsTable).values({
     lat, lng, type, description: description ?? "",
     status: "pending",
     ecoPointsAwarded: ecoPoints,
-    userId: DEFAULT_USER_ID,
+    userId: await getAppUserId(req),
     reporterUsername: user?.username ?? "Anonymous",
   }).returning();
 
@@ -44,7 +44,7 @@ router.post("/waste/reports", async (req, res): Promise<void> => {
       jawwalPoints: sql`${usersTable.jawwalPoints} + ${ecoPoints}`,
       totalReports: sql`${usersTable.totalReports} + 1`,
     })
-    .where(eq(usersTable.id, DEFAULT_USER_ID));
+    .where(eq(usersTable.id, await getAppUserId(req)));
 
   await db.insert(activityFeedTable).values({
     module: "waste",
@@ -52,7 +52,7 @@ router.post("/waste/reports", async (req, res): Promise<void> => {
     description: `Reported ${type.replace(/_/g, " ")} — earned ${ecoPoints} Eco-Points`,
     points: ecoPoints,
     username: user?.username ?? "Anonymous",
-    userId: DEFAULT_USER_ID,
+    userId: await getAppUserId(req),
   });
 
   res.status(201).json({
@@ -70,7 +70,7 @@ router.post("/waste/cleanup", async (req, res): Promise<void> => {
     return;
   }
   const cleanupPoints = 50;
-  const [user] = await db.select().from(usersTable).where(eq(usersTable.id, DEFAULT_USER_ID));
+  const [user] = await db.select().from(usersTable).where(eq(usersTable.id, await getAppUserId(req)));
 
   if (wasteReportId) {
     await db.update(wasteReportsTable)
@@ -83,10 +83,10 @@ router.post("/waste/cleanup", async (req, res): Promise<void> => {
       ecoPoints: sql`${usersTable.ecoPoints} + ${cleanupPoints}`,
       jawwalPoints: sql`${usersTable.jawwalPoints} + ${cleanupPoints}`,
     })
-    .where(eq(usersTable.id, DEFAULT_USER_ID));
+    .where(eq(usersTable.id, await getAppUserId(req)));
 
   const [tx] = await db.insert(pointsTransactionsTable).values({
-    userId: DEFAULT_USER_ID,
+    userId: await getAppUserId(req),
     type: "earn",
     points: cleanupPoints,
     category: "waste",
@@ -99,7 +99,7 @@ router.post("/waste/cleanup", async (req, res): Promise<void> => {
     description: `Performed a cleanup and earned ${cleanupPoints} Eco-Points`,
     points: cleanupPoints,
     username: user?.username ?? "Anonymous",
-    userId: DEFAULT_USER_ID,
+    userId: await getAppUserId(req),
   });
 
   res.json({

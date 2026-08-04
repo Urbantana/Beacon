@@ -4,3 +4,6 @@
 - [i18n dynamic key lookup](i18n-dynamic-keys.md) — calling t(dynamicKey as any) crashes if key is missing; always use explicit key mapping or check key existence first
 - [Heritage store seeding](heritage-store-seeding.md) — store.ts seeds HERITAGE_ITEMS on first GET /api/store/heritage if category="heritage" count < expected; idempotent by name check
 - [Events seeding](events-seeding.md) — events.ts seeds SEED_EVENTS on first GET /api/events if table is empty; only seeds once
+- [Orval index.ts overwrite](orval-index-overwrite.md) — Orval appends to lib/api-zod/src/index.ts on every codegen run; codegen script must overwrite it after orval runs
+- [Orval name collision](orval-name-collision.md) — Orval auto-generates type names like ExchangeMobileAuthorizationCodeBody from operationId; don't define schemas with those names in components.schemas or they duplicate
+- [Auth integer bridge](auth-integer-bridge.md) — Replit OIDC session stores AuthUser with string `id` (sub); integer app user created lazily by getAppUserId.ts; never insert into usersTable in the auth flow

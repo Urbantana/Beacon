@@ -5,3 +5,4 @@ export * from "./waste";
 export * from "./accessibility";
 export * from "./points";
 export * from "./events";
+export * from "./sessions";

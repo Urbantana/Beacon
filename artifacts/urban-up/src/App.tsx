@@ -12,7 +12,8 @@ import WalletPage from '@/pages/wallet';
 import MunicipalityPage from '@/pages/municipality';
 import StorePage from '@/pages/store';
 import EventsPage from '@/pages/events';
-import EventsCreatePage from '@/pages/events-create';
+import EventsCreatePage from '@/pages/events-create'
+import EventDetailPage from '@/pages/event-detail';
 
 import { I18nProvider } from '@/lib/i18n-context';
 import { ThemeProvider } from '@/lib/theme-context';
@@ -32,6 +33,7 @@ function Router() {
       <Route path="/store" component={StorePage} />
       <Route path="/events" component={EventsPage} />
       <Route path="/events/create" component={EventsCreatePage} />
+      <Route path="/events/:id" component={EventDetailPage} />
       <Route component={NotFound} />
     </Switch>
   );

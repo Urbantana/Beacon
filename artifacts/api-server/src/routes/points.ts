@@ -1,19 +1,19 @@
 import { Router, type IRouter } from "express";
+import { getAppUserId } from "../lib/getAppUserId";
 import { db, usersTable, pointsTransactionsTable, rewardsTable, activityFeedTable } from "@workspace/db";
 import { eq, desc, sql } from "drizzle-orm";
 
 const router: IRouter = Router();
-const DEFAULT_USER_ID = 1;
 
 router.get("/points/wallet", async (req, res): Promise<void> => {
-  const [user] = await db.select().from(usersTable).where(eq(usersTable.id, DEFAULT_USER_ID));
+  const [user] = await db.select().from(usersTable).where(eq(usersTable.id, await getAppUserId(req)));
   if (!user) {
     res.status(404).json({ error: "User not found" });
     return;
   }
 
   const transactions = await db.select().from(pointsTransactionsTable)
-    .where(eq(pointsTransactionsTable.userId, DEFAULT_USER_ID))
+    .where(eq(pointsTransactionsTable.userId, await getAppUserId(req)))
     .orderBy(desc(pointsTransactionsTable.createdAt))
     .limit(20);
 
@@ -52,7 +52,7 @@ router.post("/points/redeem", async (req, res): Promise<void> => {
     res.status(404).json({ error: "Reward not found" });
     return;
   }
-  const [user] = await db.select().from(usersTable).where(eq(usersTable.id, DEFAULT_USER_ID));
+  const [user] = await db.select().from(usersTable).where(eq(usersTable.id, await getAppUserId(req)));
   if (!user || user.jawwalPoints < reward.pointsCost) {
     res.status(400).json({ error: "Insufficient Jawwal Points" });
     return;
@@ -60,10 +60,10 @@ router.post("/points/redeem", async (req, res): Promise<void> => {
 
   await db.update(usersTable)
     .set({ jawwalPoints: sql`${usersTable.jawwalPoints} - ${reward.pointsCost}` })
-    .where(eq(usersTable.id, DEFAULT_USER_ID));
+    .where(eq(usersTable.id, await getAppUserId(req)));
 
   const [tx] = await db.insert(pointsTransactionsTable).values({
-    userId: DEFAULT_USER_ID,
+    userId: await getAppUserId(req),
     type: "spend",
     points: reward.pointsCost,
     category: "redemption",
@@ -76,7 +76,7 @@ router.post("/points/redeem", async (req, res): Promise<void> => {
     description: `Redeemed ${reward.name} for ${reward.pointsCost} Jawwal Points`,
     points: reward.pointsCost,
     username: user.username,
-    userId: DEFAULT_USER_ID,
+    userId: await getAppUserId(req),
   });
 
   res.json({

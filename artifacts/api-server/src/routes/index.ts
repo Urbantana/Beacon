@@ -10,9 +10,11 @@ import dashboardRouter from "./dashboard";
 import municipalityRouter from "./municipality";
 import storeRouter from "./store";
 import eventsRouter from "./events";
+import authRouter from "./auth";
 
 const router: IRouter = Router();
 
+router.use(authRouter);
 router.use(healthRouter);
 router.use(profileRouter);
 router.use(touristRouter);

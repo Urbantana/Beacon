@@ -1,13 +1,13 @@
 import { Router, type IRouter } from "express";
+import { getAppUserId } from "../lib/getAppUserId";
 import { db, usersTable } from "@workspace/db";
 import { eq } from "drizzle-orm";
 
 const router: IRouter = Router();
 
-const DEFAULT_USER_ID = 1;
 
 router.get("/profile", async (req, res): Promise<void> => {
-  let [user] = await db.select().from(usersTable).where(eq(usersTable.id, DEFAULT_USER_ID));
+  let [user] = await db.select().from(usersTable).where(eq(usersTable.id, await getAppUserId(req)));
   if (!user) {
     const [created] = await db.insert(usersTable).values({
       username: "CityExplorer",
@@ -36,7 +36,7 @@ router.put("/profile", async (req, res): Promise<void> => {
   const { username, avatarInitials } = req.body;
   const [user] = await db.update(usersTable)
     .set({ username, avatarInitials })
-    .where(eq(usersTable.id, DEFAULT_USER_ID))
+    .where(eq(usersTable.id, await getAppUserId(req)))
     .returning();
   if (!user) {
     res.status(404).json({ error: "Profile not found" });

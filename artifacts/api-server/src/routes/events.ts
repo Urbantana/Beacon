@@ -1,9 +1,9 @@
 import { Router, type IRouter } from "express";
+import { getAppUserId } from "../lib/getAppUserId";
 import { db, eventsTable, eventBookingsTable, usersTable, pointsTransactionsTable, activityFeedTable } from "@workspace/db";
 import { eq, sql, and, like } from "drizzle-orm";
 
 const router: IRouter = Router();
-const DEFAULT_USER_ID = 1;
 
 // ── Seed data ────────────────────────────────────────────────────────────────
 const SEED_EVENTS = [
@@ -145,9 +145,9 @@ router.get("/events", async (req, res): Promise<void> => {
 });
 
 // ── GET /api/events/my-bookings ──────────────────────────────────────────────
-router.get("/events/my-bookings", async (_req, res): Promise<void> => {
+router.get("/events/my-bookings", async (req, res): Promise<void> => {
   const bookings = await db.select().from(eventBookingsTable)
-    .where(eq(eventBookingsTable.userId, DEFAULT_USER_ID));
+    .where(eq(eventBookingsTable.userId, await getAppUserId(req)));
   const bookedIds = new Set(bookings.filter(b => b.status === "confirmed").map(b => b.eventId));
   res.json({ bookedEventIds: [...bookedIds] });
 });
@@ -247,13 +247,13 @@ router.post("/events/book", async (req, res): Promise<void> => {
 
   // Check existing booking
   const existing = await db.select().from(eventBookingsTable)
-    .where(and(eq(eventBookingsTable.eventId, id), eq(eventBookingsTable.userId, DEFAULT_USER_ID)));
+    .where(and(eq(eventBookingsTable.eventId, id), eq(eventBookingsTable.userId, await getAppUserId(req))));
   if (existing.length > 0 && existing[0].status === "confirmed") {
     res.status(400).json({ error: "Already booked" });
     return;
   }
 
-  const [user] = await db.select().from(usersTable).where(eq(usersTable.id, DEFAULT_USER_ID));
+  const [user] = await db.select().from(usersTable).where(eq(usersTable.id, await getAppUserId(req)));
   if (!user) { res.status(404).json({ error: "User not found" }); return; }
 
   // Deduct points if required
@@ -264,9 +264,9 @@ router.post("/events/book", async (req, res): Promise<void> => {
     }
     await db.update(usersTable)
       .set({ jawwalPoints: sql`${usersTable.jawwalPoints} - ${event.pointsRequired}` })
-      .where(eq(usersTable.id, DEFAULT_USER_ID));
+      .where(eq(usersTable.id, await getAppUserId(req)));
     await db.insert(pointsTransactionsTable).values({
-      userId: DEFAULT_USER_ID, type: "spend",
+      userId: await getAppUserId(req), type: "spend",
       points: event.pointsRequired, category: "tourism",
       description: `Event booking: ${event.title}`,
     });
@@ -276,9 +276,9 @@ router.post("/events/book", async (req, res): Promise<void> => {
   if (event.pointsReward > 0) {
     await db.update(usersTable)
       .set({ jawwalPoints: sql`${usersTable.jawwalPoints} + ${event.pointsReward}` })
-      .where(eq(usersTable.id, DEFAULT_USER_ID));
+      .where(eq(usersTable.id, await getAppUserId(req)));
     await db.insert(pointsTransactionsTable).values({
-      userId: DEFAULT_USER_ID, type: "earn",
+      userId: await getAppUserId(req), type: "earn",
       points: event.pointsReward, category: "tourism",
       description: `Event attendance reward: ${event.title}`,
     });
@@ -286,7 +286,7 @@ router.post("/events/book", async (req, res): Promise<void> => {
 
   // Create booking
   const [booking] = await db.insert(eventBookingsTable).values({
-    eventId: id, userId: DEFAULT_USER_ID,
+    eventId: id, userId: await getAppUserId(req),
     status: "confirmed",
     pointsUsed: event.pointsRequired,
   }).returning();
@@ -302,7 +302,7 @@ router.post("/events/book", async (req, res): Promise<void> => {
     description: `Booked "${event.title}" — earned ${event.pointsReward} Jawwal Points`,
     points: event.pointsReward,
     username: user.username,
-    userId: DEFAULT_USER_ID,
+    userId: await getAppUserId(req),
   });
 
   res.status(201).json({
