@@ -25,6 +25,7 @@ import SuggestionsCreatePage from '@/pages/suggestions-create';
 import ComplaintsPage from '@/pages/complaints';
 import ComplaintsCreatePage from '@/pages/complaints-create';
 import FuelPage from '@/pages/fuel';
+import AdminStatusPage from '@/pages/admin-status';
 
 import { I18nProvider } from '@/lib/i18n-context';
 import { ThemeProvider } from '@/lib/theme-context';
@@ -55,6 +56,7 @@ function Router() {
       <Route path="/complaints/create" component={ComplaintsCreatePage} />
       <Route path="/complaints" component={ComplaintsPage} />
       <Route path="/fuel" component={FuelPage} />
+      <Route path="/admin/status" component={AdminStatusPage} />
       <Route component={NotFound} />
     </Switch>
   );

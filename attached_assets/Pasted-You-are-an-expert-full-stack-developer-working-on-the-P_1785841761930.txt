@@ -1,0 +1,45 @@
+You are an expert full-stack developer working on the PalTurk project.
+
+Your task is to perform TWO actions in sequence:
+
+## Phase 1: Generate a Technical Report
+First, explore the entire codebase and generate a comprehensive technical report in Markdown format, covering:
+- Project Overview
+- Tech Stack
+- File Structure (tree view)
+- Database Schema (tables and columns)
+- API Routes (all endpoints)
+- Frontend Pages (all routes)
+- Key Components
+- Integration Points (if any)
+
+## Phase 2: Build the Admin Status Dashboard
+Based on your exploration, build a fully functional **Admin Status Dashboard** at route `/admin/status`.
+
+**Goal:** Provide a real-time overview of the platform's key metrics for administrators.
+
+**Requirements for `/admin/status`:**
+- **Layout:** Clean dashboard with cards, progress bars, and status indicators.
+- **Metrics to display (live data from the database):**
+  - **Total Users** – Count from `users` table
+  - **Total Events** – Upcoming + Ongoing (from `events` table)
+  - **Complaints Summary** – Count by status (Received, Under Review, In Progress, Resolved) with progress bars or a pie chart.
+  - **Fuel Reports** – Pending vs Confirmed (from `fuel_reports` table)
+  - **Tours Available** – Count from `tours` table
+  - **Total Jawwal Points Issued** – Sum from `transactions` table
+  - **Server Status** – API health check (e.g., "🟢 Online" or "🔴 Offline")
+  - **Last Updated** – Timestamp of the last data update
+- **Backend API:** Create a new endpoint `GET /api/admin/stats` that returns all these metrics in one JSON response.
+- **Frontend:** Create a new page `client/src/pages/AdminStatus.tsx` that fetches and displays this data.
+- **Sidebar:** Add a new link "Admin Status" under a new section "Administration" or "City Control".
+- **Refresh:** Add a "Refresh" button to manually update the data.
+- **Translations:** Support Arabic and English.
+
+**Execution Instructions:**
+1. First, generate the technical report (Phase 1).
+2. Then, based on your findings, implement the Admin Status Dashboard (Phase 2).
+3. Write all necessary code (DB queries, API route, frontend page, sidebar update, translations).
+4. Test and verify that the dashboard shows real data from the existing tables.
+5. Provide a screenshot of the final result.
+
+**Proceed immediately. Generate the report, then build the dashboard.**

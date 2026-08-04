@@ -384,6 +384,20 @@ export const translations = {
   chatbotOnline:        { en: 'Online',                        ar: 'متصل' },
   chatbotPlaceholder:   { en: 'Type a message…',               ar: 'اكتب رسالة…' },
   chatbotOpen:          { en: 'Open assistant',                ar: 'فتح المساعد' },
+
+  // ── Admin Status Dashboard ───────────────────────────────
+  adminTitle:           { en: 'Admin Status Dashboard',        ar: 'لوحة تحكم الإدارة' },
+  adminSub:             { en: 'Real-time platform metrics and health overview', ar: 'مقاييس المنصة والصحة في الوقت الفعلي' },
+  adminNavLabel:        { en: 'Admin Status',                  ar: 'لوحة الإدارة' },
+  adminSection:         { en: 'Administration',                ar: 'الإدارة' },
+  adminRefresh:         { en: 'Refresh',                       ar: 'تحديث' },
+  adminLastUpdated:     { en: 'Last Updated',                  ar: 'آخر تحديث' },
+  adminServerOnline:    { en: 'Online',                        ar: 'متصل' },
+  adminServerOffline:   { en: 'Offline',                       ar: 'غير متصل' },
+  adminTotalUsers:      { en: 'Total Users',                   ar: 'إجمالي المستخدمين' },
+  adminActiveEvents:    { en: 'Active Events',                 ar: 'الفعاليات النشطة' },
+  adminToursAvail:      { en: 'Tours Available',               ar: 'الجولات المتاحة' },
+  adminPointsIssued:    { en: 'Points Issued',                 ar: 'النقاط الصادرة' },
 } as const;
 
 export type TranslationKey = keyof typeof translations;

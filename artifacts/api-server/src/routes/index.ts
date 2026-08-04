@@ -18,6 +18,7 @@ import suggestionsRouter from "./suggestions";
 import complaintsRouter from "./complaints";
 import chatbotRouter from "./chatbot";
 import fuelRouter from "./fuel";
+import adminRouter from "./admin";
 
 const router: IRouter = Router();
 
@@ -40,5 +41,6 @@ router.use(suggestionsRouter);
 router.use(complaintsRouter);
 router.use(chatbotRouter);
 router.use(fuelRouter);
+router.use(adminRouter);
 
 export default router;

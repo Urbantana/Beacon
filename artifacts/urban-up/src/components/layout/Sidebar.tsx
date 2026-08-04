@@ -18,6 +18,7 @@ import {
   Fuel,
   Star,
   MessageSquare,
+  BarChart3,
 } from "lucide-react"
 import { useGetProfile } from "@workspace/api-client-react"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
@@ -51,6 +52,10 @@ export function Sidebar() {
     { href: "/suggestions", label: lang === "ar" ? "المقترحات"      : "Suggestions",  icon: TrendingUp },
     { href: "/complaints",  label: lang === "ar" ? "الشكاوى"        : "Complaints",   icon: AlertCircle },
     { href: "/fuel",        label: lang === "ar" ? "مراقبة الوقود"  : "Fuel Intel",   icon: Fuel },
+  ]
+
+  const adminLinks = [
+    { href: "/admin/status", label: lang === "ar" ? "لوحة الإدارة" : "Admin Status", icon: BarChart3 },
   ]
 
   const isActive = (href: string) =>
@@ -117,6 +122,14 @@ export function Sidebar() {
           <SectionLabel label={lang === "ar" ? "المجتمع" : "Community"} />
           <nav className="flex flex-col gap-0.5">
             {communityLinks.map((link) => <NavLink key={link.href} {...link} />)}
+          </nav>
+        </div>
+
+        {/* Administration */}
+        <div>
+          <SectionLabel label={lang === "ar" ? "الإدارة" : "Administration"} />
+          <nav className="flex flex-col gap-0.5">
+            {adminLinks.map((link) => <NavLink key={link.href} {...link} />)}
           </nav>
         </div>
       </div>
