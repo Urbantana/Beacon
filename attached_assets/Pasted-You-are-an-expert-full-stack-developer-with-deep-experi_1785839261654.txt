@@ -1,0 +1,198 @@
+You are an expert full-stack developer with deep experience in React, Next.js (App Router), TypeScript, SQLite, Tailwind CSS, React Native/Expo, and AI integration. You are working on the PalTurk project – a smart city and tourism platform.
+
+## 🏗️ Project Status (Already Built)
+- Web app: Dashboard, Traffic Routes, Safe Paths, Eco Rewards, Wallet, Heritage Store, Municipality Dashboard, Events System
+- Mobile app: Written but not started (artifacts/paltur-mobile)
+- APIs: All working (events, wallet, store, municipality heatmap)
+- Authentication: Replit OIDC implemented, users table working
+
+## 🎯 Missing Features to Implement NOW
+
+### 1. Carbon Footprint & Sustainable Tourism (from Course 1)
+**Goal:** Calculate and display the carbon footprint of each trip/route, and allow users to offset it.
+
+**Requirements:**
+- Add a "Carbon Footprint" section to the route planning page
+- Calculate estimated emissions (distance × emission factor)
+- Show a "Plant a Tree" button that deducts points and plants a virtual tree
+- Add translations (Arabic/English)
+- Display user's total offset trees in the wallet
+
+**Files to create/modify:**
+- `app/traffic/carbon/page.tsx` – Carbon footprint calculator
+- `app/api/carbon/route.ts` – Calculate emissions
+- `app/api/carbon/offset/route.ts` – Plant tree (deduct points)
+- Update `i18n/translations.ts` – Add carbon keys
+- Update Sidebar – Add "Carbon" link
+
+### 2. Community Tours (from Course 1)
+**Goal:** Allow local guides to create and offer tours, and users to book them.
+
+**Requirements:**
+- Local guides can create tours with description, price, duration, max participants
+- Users can browse tours and book them
+- Tours appear on the map with special markers
+- Guides earn Jawwal Points for completed tours
+- Bilingual (Arabic/English)
+
+**Files to create/modify:**
+- `app/tours/page.tsx` – Browse tours
+- `app/tours/[id]/page.tsx` – Tour details and booking
+- `app/tours/create/page.tsx` – Create tour (for guides)
+- `app/api/tours/route.ts` – CRUD for tours
+- `app/api/tours/book/route.ts` – Booking logic
+- Update translations and Sidebar
+
+### 3. Destination of the Month (from Course 2)
+**Goal:** Highlight a featured destination with special offers, content, and challenges.
+
+**Requirements:**
+- Admin can select a destination as "Destination of the Month"
+- Display it prominently on the homepage with a badge
+- Show related events, tours, and store items with discounts
+- Users earn bonus points for visiting featured locations
+- Bilingual (Arabic/English)
+
+**Files to create/modify:**
+- `app/destination-of-month/page.tsx` – Featured destination page
+- `app/api/destination/route.ts` – Get/set destination of the month
+- Update homepage to show the featured destination
+- Update translations
+
+### 4. Personalized Event Recommendations (from Course 4)
+**Goal:** Recommend events to users based on their past behavior and interests.
+
+**Requirements:**
+- Analyze user's booking history and interests
+- Show "Recommended for You" section on the events page
+- Simple algorithm: events in the same category the user booked before
+- Display recommendation score (e.g., "90% match")
+- Bilingual (Arabic/English)
+
+**Files to create/modify:**
+- `app/api/events/recommendations/route.ts` – Recommendation engine
+- Update `app/events/page.tsx` – Add recommendations section
+- Update translations
+
+### 5. Citizen Suggestions & Voting System (New – Priority 1)
+**Goal:** Allow citizens to suggest improvements and vote on them. Municipality can see priorities.
+
+**Requirements:**
+- Citizens can submit suggestions (title, description, category, location)
+- Other citizens can upvote/downvote suggestions
+- Municipality can mark suggestions as "Under Review", "Approved", "Rejected", "Implemented"
+- Display top suggestions in the sidebar or dashboard
+- Each suggestion shows vote count and status
+- Bilingual (Arabic/English)
+
+**Files to create/modify:**
+- `app/suggestions/page.tsx` – Browse and vote on suggestions
+- `app/suggestions/create/page.tsx` – Submit new suggestion
+- `app/api/suggestions/route.ts` – CRUD for suggestions
+- `app/api/suggestions/vote/route.ts` – Upvote/downvote
+- Update dashboard to show top suggestions
+- Update Sidebar with "Suggestions" link
+- Update translations
+
+### 6. AI Chatbot Assistant (New – Priority 2)
+**Goal:** Provide an AI-powered assistant to help users navigate the platform and answer questions.
+
+**Requirements:**
+- Floating chat icon in the bottom-right corner (like Intercom)
+- Pre-trained responses for common questions (events, booking, points, tours)
+- For complex questions, provide relevant links or suggest contacting support
+- Context-aware: if user is on events page, suggest events-related questions
+- Bilingual (Arabic/English) – responds in the user's current language
+
+**Files to create/modify:**
+- `components/Chatbot.tsx` – Floating chat UI
+- `app/api/chatbot/route.ts` – Simple rule-based or OpenAI-powered responses
+- Update `app/layout.tsx` – Add Chatbot component globally
+
+### 7. Advanced Complaint Tracking (New – Priority 1)
+**Goal:** Allow citizens to report problems (obstacles, waste, potholes, etc.) and track their resolution.
+
+**Requirements:**
+- Submit complaint with photo, location, category, and description
+- Each complaint gets a tracking ID
+- Status updates: Pending → Under Review → In Progress → Resolved
+- Municipality can update status and add notes
+- Users can see their complaints and status
+- Bilingual (Arabic/English)
+
+**Files to create/modify:**
+- `app/complaints/page.tsx` – View user's complaints
+- `app/complaints/create/page.tsx` – Submit new complaint
+- `app/api/complaints/route.ts` – CRUD for complaints
+- `app/api/complaints/[id]/route.ts` – Update status
+- Update dashboard to show complaints summary
+- Update Sidebar with "Complaints" link
+- Update translations
+
+### 8. Mobile App – Start and Test (Existing)
+**Goal:** Get the mobile app running and tested.
+
+**Requirements:**
+- Navigate to `artifacts/paltur-mobile` and run `npx expo start`
+- Ensure all screens load correctly
+- Test API integration
+- Make sure Arabic/English toggle works
+- Fix any missing dependencies (expo-location)
+
+### 9. Community Fuel Intel & Crisis Management (New – Priority 1 – Integrated)
+**Goal:** Create a comprehensive fuel crisis management system that combines community intelligence with proactive booking, scheduling, and alerting to reduce queues and manage demand.
+
+**Requirements:**
+- Citizens can report fuel availability (Petrol/Diesel) at specific stations
+- Multiple reports for the same station increase confidence level (Green = confirmed, Red = unavailable, Yellow = unknown/old)
+- **NEW: Users can book a time slot at a station** to reserve fuel and reduce physical queues
+- **NEW: Station owners/operators can set operating hours** (24/7, or specific daytime/nighttime hours)
+- **NEW: Users receive push notifications when fuel becomes available** at their preferred station (sudden supply arrival)
+- **NEW: Priority system** for emergency vehicles (ambulances, fire trucks) to skip the queue
+- **NEW: Queue length and estimated wait time** displayed on the map for each station
+- **NEW: Historical data and demand prediction** to anticipate peak times and supply shortages
+- Users earn Jawwal Points for accurate reports
+- All text is bilingual (Arabic/English) with RTL support
+- Full integration with the existing map (Leaflet) and wallet systems
+
+**Files to create/modify:**
+- `app/fuel/page.tsx` – Full fuel dashboard with map, status, queue info, and booking
+- `app/fuel/report/page.tsx` – Report fuel availability form
+- `app/fuel/book/page.tsx` – Book a fuel time slot (with QR code or confirmation number)
+- `app/fuel/schedule/page.tsx` – Set station operating hours (for station owners)
+- `app/fuel/history/page.tsx` – View historical data and demand patterns
+- `app/fuel/priority/page.tsx` – Manage priority status (for emergency vehicles)
+- `app/api/fuel/route.ts` – CRUD for fuel reports and stations
+- `app/api/fuel/book/route.ts` – Booking API (create, view, cancel, confirm)
+- `app/api/fuel/queue/route.ts` – Queue status and estimated wait time API
+- `app/api/fuel/notify/route.ts` – Notification API (subscribe, send alerts, SMS/email stubs)
+- `app/api/fuel/analytics/route.ts` – Demand prediction and pattern analysis
+- Update database schema: `stations`, `fuel_reports`, `fuel_bookings`, `fuel_queue`, `fuel_notifications`, `fuel_operating_hours`
+- Update Sidebar with "Fuel" link and sub-links (Report, Book, Queue, Schedule)
+- Update translations
+
+## 📋 General Requirements for ALL Features
+- **Code Quality:** Clean, well-structured, commented
+- **Consistency:** Follow existing coding style
+- **Translations:** All new text in both Arabic and English
+- **Accessibility:** WCAG 2.1 AA standards (ARIA labels, keyboard navigation)
+- **Testing:** Each feature must be manually tested
+
+## ✅ Completion Criteria
+- [ ] Carbon Footprint feature works
+- [ ] Community Tours feature works
+- [ ] Destination of the Month works
+- [ ] Personalized Event Recommendations work
+- [ ] Suggestions & Voting system works
+- [ ] AI Chatbot works
+- [ ] Advanced Complaint Tracking works
+- [ ] Mobile app runs successfully
+- [ ] Fuel Intel & Crisis Management works (report, book, schedule, notify, queue)
+
+## 🚀 Execution Instructions
+1. **First, read all existing files** to understand the structure
+2. **Then, implement all features in parallel** (write all files at once)
+3. **Do not stop** until all features are complete and tested
+4. **Show results** with screenshots
+
+**Proceed immediately. Execute all features in parallel. Do not stop until all are complete.**

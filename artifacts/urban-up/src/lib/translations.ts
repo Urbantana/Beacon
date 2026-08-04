@@ -288,6 +288,95 @@ export const translations = {
   endAfterStart:        { en: 'End date must be after start date', ar: 'يجب أن يكون تاريخ النهاية بعد تاريخ البداية' },
   eventCreated:         { en: 'Event Created!',                ar: 'تم إنشاء الفعالية!' },
   eventCreatedDesc:     { en: 'Your event has been published and is now visible to all users.', ar: 'تم نشر فعاليتك وهي مرئية الآن لجميع المستخدمين.' },
+  // ── Nav labels ──────────────────────────────────────────
+  navCarbon:            { en: 'Carbon Footprint',              ar: 'البصمة الكربونية' },
+  navTours:             { en: 'Community Tours',               ar: 'الجولات المجتمعية' },
+  navDestination:       { en: 'Destination of Month',          ar: 'وجهة الشهر' },
+  navSuggestions:       { en: 'Suggestions',                   ar: 'المقترحات' },
+  navComplaints:        { en: 'Complaints',                    ar: 'الشكاوى' },
+  navFuel:              { en: 'Fuel Intelligence',             ar: 'مراقبة الوقود' },
+  navCommunity:         { en: 'Community',                     ar: 'المجتمع' },
+
+  // ── Carbon page ─────────────────────────────────────────
+  carbonTitle:          { en: 'Carbon Footprint',              ar: 'البصمة الكربونية' },
+  carbonSub:            { en: 'Calculate your emissions and offset them by planting trees.', ar: 'احسب انبعاثاتك وعوّضها بزراعة الأشجار.' },
+  carbonCalc:           { en: 'Calculate Emissions',           ar: 'حساب الانبعاثات' },
+  carbonDistance:       { en: 'Distance (km)',                 ar: 'المسافة (كم)' },
+  carbonMode:           { en: 'Transport Mode',                ar: 'وسيلة النقل' },
+  carbonResult:         { en: 'Estimated Emissions',           ar: 'الانبعاثات المقدرة' },
+  carbonOffset:         { en: 'Offset with Trees',             ar: 'تعويض بالأشجار' },
+  carbonPlantTree:      { en: 'Plant a Tree (50 pts)',         ar: 'زرع شجرة (50 نقطة)' },
+  carbonMyOffset:       { en: 'My Offsets',                   ar: 'تعويضاتي' },
+  carbonTreesPlanted:   { en: 'Trees Planted',                 ar: 'أشجار مزروعة' },
+  carbonTotalOffset:    { en: 'Total CO₂ Offset',             ar: 'إجمالي CO₂ معوّض' },
+
+  // ── Tours page ───────────────────────────────────────────
+  toursTitle:           { en: 'Community Tours',               ar: 'الجولات المجتمعية' },
+  toursSub:             { en: 'Discover guided tours around Ramallah and beyond.', ar: 'اكتشف جولات مرشدة حول رام الله وما يليها.' },
+  toursCreate:          { en: 'Create Tour',                   ar: 'إنشاء جولة' },
+  tourBook:             { en: 'Book Tour',                     ar: 'احجز الجولة' },
+  tourBooked:           { en: 'Booked',                        ar: 'تم الحجز' },
+  tourFull:             { en: 'Full',                          ar: 'مكتملة' },
+  tourDuration:         { en: 'Duration',                      ar: 'المدة' },
+  tourParticipants:     { en: 'Participants',                  ar: 'المشاركون' },
+  tourGuide:            { en: 'Guide',                         ar: 'المرشد' },
+  tourDate:             { en: 'Date',                          ar: 'التاريخ' },
+  tourPrice:            { en: 'Price',                         ar: 'السعر' },
+  tourFree:             { en: 'Free',                          ar: 'مجاني' },
+  tourReward:           { en: 'Reward',                        ar: 'المكافأة' },
+
+  // ── Destination of Month ────────────────────────────────
+  destTitle:            { en: 'Destination of the Month',      ar: 'وجهة الشهر' },
+  destSub:              { en: "This month's featured destination in Palestine.", ar: 'الوجهة المميزة هذا الشهر في فلسطين.' },
+  destDiscount:         { en: 'Discount',                      ar: 'خصم' },
+  destBonusPts:         { en: 'Bonus Points',                  ar: 'نقاط إضافية' },
+  destRelatedEvents:    { en: 'Related Events',                ar: 'فعاليات ذات صلة' },
+  destRelatedTours:     { en: 'Related Tours',                 ar: 'جولات ذات صلة' },
+
+  // ── Suggestions page ────────────────────────────────────
+  suggestionsTitle:     { en: 'City Suggestions',              ar: 'مقترحات المدينة' },
+  suggestionsSub:       { en: 'Vote on ideas to improve Ramallah.', ar: 'صوّت على الأفكار لتحسين رام الله.' },
+  suggestCreate:        { en: 'New Suggestion',                ar: 'مقترح جديد' },
+  suggestUpvote:        { en: 'Upvote',                        ar: 'تأييد' },
+  suggestDownvote:      { en: 'Downvote',                      ar: 'رفض' },
+  suggestStatus:        { en: 'Status',                        ar: 'الحالة' },
+  suggestPending:       { en: 'Pending',                       ar: 'قيد الانتظار' },
+  suggestUnderReview:   { en: 'Under Review',                  ar: 'قيد المراجعة' },
+  suggestApproved:      { en: 'Approved',                      ar: 'تمت الموافقة' },
+  suggestRejected:      { en: 'Rejected',                      ar: 'مرفوض' },
+  suggestCategory:      { en: 'Category',                      ar: 'الفئة' },
+
+  // ── Complaints page ─────────────────────────────────────
+  complaintsTitle:      { en: 'Complaints & Issues',           ar: 'الشكاوى والمشاكل' },
+  complaintsSub:        { en: 'Report city issues and track their resolution.', ar: 'أبلغ عن مشاكل المدينة وتابع حلّها.' },
+  complaintsCreate:     { en: 'New Complaint',                 ar: 'شكوى جديدة' },
+  complaintTracking:    { en: 'Tracking ID',                   ar: 'رقم التتبع' },
+  complaintStatus:      { en: 'Status',                        ar: 'الحالة' },
+  complaintPending:     { en: 'Received',                      ar: 'مستلم' },
+  complaintReviewing:   { en: 'Under Review',                  ar: 'قيد المراجعة' },
+  complaintInProgress:  { en: 'In Progress',                   ar: 'جارٍ العمل' },
+  complaintResolved:    { en: 'Resolved',                      ar: 'تم الحل' },
+  complaintCategory:    { en: 'Issue Type',                    ar: 'نوع المشكلة' },
+  noComplaints:         { en: 'No complaints yet',             ar: 'لا توجد شكاوى بعد' },
+
+  // ── Fuel page ────────────────────────────────────────────
+  fuelTitle:            { en: 'Fuel Intelligence',             ar: 'مراقبة الوقود' },
+  fuelSub:              { en: 'Real-time fuel availability crowdsourced by citizens.', ar: 'توفر الوقود في الوقت الفعلي بمشاركة المواطنين.' },
+  fuelAvailable:        { en: 'Available',                     ar: 'متاح' },
+  fuelUnavailable:      { en: 'Unavailable',                   ar: 'غير متاح' },
+  fuelUnknown:          { en: 'Unknown',                       ar: 'غير معروف' },
+  fuelReport:           { en: 'Report Status',                 ar: 'أبلغ عن الحالة' },
+  fuelBook:             { en: 'Book Slot',                     ar: 'احجز موعدًا' },
+  fuelQueue:            { en: 'Queue',                         ar: 'الطابور' },
+  fuelConfidence:       { en: 'Confidence',                    ar: 'الثقة' },
+  fuelMyBookings:       { en: 'My Bookings',                   ar: 'حجوزاتي' },
+  fuelEarnPts:          { en: 'Report & earn 20 pts',          ar: 'أبلغ واكسب 20 نقطة' },
+
+  // ── Chatbot ──────────────────────────────────────────────
+  chatbotTitle:         { en: 'PalTur Assistant',              ar: 'مساعد بالتور' },
+  chatbotOnline:        { en: 'Online',                        ar: 'متصل' },
+  chatbotPlaceholder:   { en: 'Type a message…',               ar: 'اكتب رسالة…' },
+  chatbotOpen:          { en: 'Open assistant',                ar: 'فتح المساعد' },
 } as const;
 
 export type TranslationKey = keyof typeof translations;

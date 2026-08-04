@@ -7,3 +7,4 @@
 - [Orval index.ts overwrite](orval-index-overwrite.md) — Orval appends to lib/api-zod/src/index.ts on every codegen run; codegen script must overwrite it after orval runs
 - [Orval name collision](orval-name-collision.md) — Orval auto-generates type names like ExchangeMobileAuthorizationCodeBody from operationId; don't define schemas with those names in components.schemas or they duplicate
 - [Auth integer bridge](auth-integer-bridge.md) — Replit OIDC session stores AuthUser with string `id` (sub); integer app user created lazily by getAppUserId.ts; never insert into usersTable in the auth flow
+- [Phase 2 features complete](phase2-complete.md) — all 9 Phase 2 features fully implemented: carbon, tours, destination-of-month, suggestions, complaints, chatbot, fuel, recommendations, DB tables created via psql

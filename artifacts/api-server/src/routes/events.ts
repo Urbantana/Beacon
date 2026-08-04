@@ -152,6 +152,39 @@ router.get("/events/my-bookings", async (req, res): Promise<void> => {
   res.json({ bookedEventIds: [...bookedIds] });
 });
 
+// ── GET /api/events/recommendations ─────────────────────────────────────────
+router.get("/events/recommendations", async (req, res): Promise<void> => {
+  const userId = await getAppUserId(req);
+  // Get user's past booking categories
+  const myBookings = await db
+    .select({ eventId: eventBookingsTable.eventId })
+    .from(eventBookingsTable)
+    .where(eq(eventBookingsTable.userId, userId));
+
+  const bookedIds = myBookings.map(b => b.eventId);
+
+  // Get all upcoming events
+  const allEvents = await db.select().from(eventsTable)
+    .where(eq(eventsTable.status, "upcoming"))
+    .orderBy(eventsTable.startDate)
+    .limit(20);
+
+  // Find categories the user has attended
+  let preferredCategories: string[] = [];
+  if (bookedIds.length > 0) {
+    const bookedEvents = allEvents.filter(e => bookedIds.includes(e.id));
+    preferredCategories = [...new Set(bookedEvents.map(e => e.category))];
+  }
+
+  // Sort: preferred categories first, then exclude already booked
+  const unbooked = allEvents.filter(e => !bookedIds.includes(e.id));
+  const preferred = unbooked.filter(e => preferredCategories.includes(e.category));
+  const others = unbooked.filter(e => !preferredCategories.includes(e.category));
+  const recommendations = [...preferred, ...others].slice(0, 6);
+
+  res.json(recommendations.map(formatEvent));
+});
+
 // ── GET /api/events/:id ──────────────────────────────────────────────────────
 router.get("/events/:id", async (req, res): Promise<void> => {
   const id = parseInt(req.params.id, 10);

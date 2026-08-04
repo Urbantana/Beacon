@@ -12,11 +12,23 @@ import WalletPage from '@/pages/wallet';
 import MunicipalityPage from '@/pages/municipality';
 import StorePage from '@/pages/store';
 import EventsPage from '@/pages/events';
-import EventsCreatePage from '@/pages/events-create'
+import EventsCreatePage from '@/pages/events-create';
 import EventDetailPage from '@/pages/event-detail';
+
+// New pages
+import CarbonPage from '@/pages/carbon';
+import ToursPage from '@/pages/tours';
+import ToursCreatePage from '@/pages/tours-create';
+import DestinationOfMonthPage from '@/pages/destination-of-month';
+import SuggestionsPage from '@/pages/suggestions';
+import SuggestionsCreatePage from '@/pages/suggestions-create';
+import ComplaintsPage from '@/pages/complaints';
+import ComplaintsCreatePage from '@/pages/complaints-create';
+import FuelPage from '@/pages/fuel';
 
 import { I18nProvider } from '@/lib/i18n-context';
 import { ThemeProvider } from '@/lib/theme-context';
+import { Chatbot } from '@/components/Chatbot';
 
 const queryClient = new QueryClient();
 
@@ -31,9 +43,18 @@ function Router() {
       <Route path="/wallet" component={WalletPage} />
       <Route path="/municipality" component={MunicipalityPage} />
       <Route path="/store" component={StorePage} />
-      <Route path="/events" component={EventsPage} />
       <Route path="/events/create" component={EventsCreatePage} />
       <Route path="/events/:id" component={EventDetailPage} />
+      <Route path="/events" component={EventsPage} />
+      <Route path="/carbon" component={CarbonPage} />
+      <Route path="/tours/create" component={ToursCreatePage} />
+      <Route path="/tours" component={ToursPage} />
+      <Route path="/destination-of-month" component={DestinationOfMonthPage} />
+      <Route path="/suggestions/create" component={SuggestionsCreatePage} />
+      <Route path="/suggestions" component={SuggestionsPage} />
+      <Route path="/complaints/create" component={ComplaintsCreatePage} />
+      <Route path="/complaints" component={ComplaintsPage} />
+      <Route path="/fuel" component={FuelPage} />
       <Route component={NotFound} />
     </Switch>
   );
@@ -47,6 +68,7 @@ function App() {
           <TooltipProvider>
             <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, '')}>
               <Router />
+              <Chatbot />
             </WouterRouter>
             <Toaster />
           </TooltipProvider>

@@ -11,6 +11,13 @@ import municipalityRouter from "./municipality";
 import storeRouter from "./store";
 import eventsRouter from "./events";
 import authRouter from "./auth";
+import carbonRouter from "./carbon";
+import toursRouter from "./tours";
+import destinationsRouter from "./destinations";
+import suggestionsRouter from "./suggestions";
+import complaintsRouter from "./complaints";
+import chatbotRouter from "./chatbot";
+import fuelRouter from "./fuel";
 
 const router: IRouter = Router();
 
@@ -26,5 +33,12 @@ router.use(dashboardRouter);
 router.use(municipalityRouter);
 router.use(storeRouter);
 router.use(eventsRouter);
+router.use(carbonRouter);
+router.use(toursRouter);
+router.use(destinationsRouter);
+router.use(suggestionsRouter);
+router.use(complaintsRouter);
+router.use(chatbotRouter);
+router.use(fuelRouter);
 
 export default router;
